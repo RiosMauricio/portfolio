@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Quicksand:wght@300..700&display=swap');
+
+.titleName {
+  font-family: 'PT Serif', serif;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-family: 'Quicksand';
+  font-weight: 700;
+}
+
+.paragraph {
+  font-family: 'Quicksand';
+  font-weight: 500;
+}
+
+.readMore {
+  background-color: #18181B;
+  color: rgb(255, 255, 255);
+  width: 45px;
+  height: 45px;
+  opacity: 0.75;
+  border: 1px solid #5d5d5d;
+  border-radius: 30px;
+  cursor: pointer;
+  animation: bounce_513 1s infinite;
+}
+
+.readMore:hover {
+  background-color: #242426; /* Un color más claro al hacer hover */
+  opacity: 1; /* Aumenta la opacidad */
+  transform: scale(1.1); /* Hace que el botón crezca un poco */
+  transition: all 0.3s ease-in-out; /* Suaviza la transición */
+}
+
+@keyframes bounce_513 {
+  0%,
+    100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
