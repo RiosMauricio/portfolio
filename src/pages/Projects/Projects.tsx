@@ -67,7 +67,7 @@ export const Projects = () => {
             w="100%" // Ocupa todo el ancho disponible
           >
             {cards.map((card, index) => (
-              <GridItem key={index} w="100%" h="auto" my={4} ml={4}>
+              <GridItem key={index} w="100%" h="auto" my={4} ml={1}>
                 <Box className="project-cards" p={4}>
                   <Grid templateColumns="6fr 1fr" gap={4} alignItems="start">
                     {/* Columna del video */}
@@ -77,7 +77,7 @@ export const Projects = () => {
                           url={card.videoUrl}
                           width="100%"
                           height="30vh"
-                          playing={card.playOn}
+                          playing
                           controls
                           loop
                           muted
@@ -90,7 +90,7 @@ export const Projects = () => {
                     <GridItem>
                       {[IoRadioButtonOnOutline, GiSettingsKnobs, GiRoundKnob].map((Icon, iconIndex) => (
                         <div key={iconIndex} style={{ margin: '20px 0' }}>
-                          <Icon color="white" size="2em" />
+                          <Icon color="grey" size="2em" />
                         </div>
                       ))}
                     </GridItem>

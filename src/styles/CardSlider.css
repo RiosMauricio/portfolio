@@ -5,9 +5,26 @@
   padding: 15px;
   border-radius: 35px;
   background: linear-gradient(45deg, #20222d, #262636);
-  box-shadow: inset 20px -20px 41px #0f0f0f,
-    inset -20px 20px 41px #262626;
+  box-shadow: inset 20px -20px 41px #0f0f0f, inset -20px 20px 41px #262626;
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Opcional: un pequeño zoom al señalar */
+  box-shadow: inset 20px -20px 41px #2a2a2a, inset -20px 20px 41px #2f2f2f;
+}
+
+/* Estilo para los íconos */
+.card .icon {
+  filter: grayscale(100%); /* Los íconos están en escala de grises por defecto */
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+/* Al señalar toda la tarjeta, colorea los íconos */
+.card:hover .icon {
+  filter: grayscale(0); /* Restablece los colores originales */
+  transform: scale(1.1); /* Opcional: un ligero zoom */
 }
 
 .card p {

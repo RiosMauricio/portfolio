@@ -4,9 +4,9 @@
   width: 430px;
   height: 370px;
   border-radius: 20px;
-  background: linear-gradient(225deg, #56391f, #48301a);
-  box-shadow:  -12px 12px 0px #402a17,
-               12px -12px 0px #604023;
+  background: linear-gradient(225deg, #2a2a2d, #232326);
+  box-shadow: -9px 9px 0px #0b0b0b,
+    19px -19px 0px #37373b;
   transition: 0.4s;
 }
 
