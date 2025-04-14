@@ -20,7 +20,7 @@ export const AboutMe = () => {
       <Box color="white" p={4} borderRadius="md" height="calc(100vh - 50px)" pt="70px">
         <Flex justify="center" align="center" height="100%" flexDirection="row" gap={6}>
           <Image
-            src="../../../public/1656613.png"
+            src="assets/1656613.png"
             boxSize="300px"
             borderRadius="full"
             fit="cover"
@@ -49,15 +49,6 @@ export const AboutMe = () => {
 
         {/* Card experiencia */}
         <WorkExp></WorkExp>
-
-        {/* <Card.Root size="sm" m={4}>
-          <Card.Header>
-            <Heading className="subtitle" size={'md'}>Mis habilidades</Heading>
-          </Card.Header>
-          <Card.Body color="fg.muted">
-            <CardSlider></CardSlider>
-          </Card.Body>
-        </Card.Root> */}
 
       </section>
     </>

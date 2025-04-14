@@ -1,9 +1,8 @@
-import { Card } from "@chakra-ui/react"
+import { Card, Icon } from "@chakra-ui/react"
 import { Float } from "@chakra-ui/react"
 import { Blockquote } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
 import { List } from "@chakra-ui/react"
-import { TbShovel } from "react-icons/tb"
 import "../../styles/AboutMe.css"
 
 export const WorkExp = () => {
@@ -16,7 +15,9 @@ export const WorkExp = () => {
         <Card.Body color="fg.muted">
           <Blockquote.Root variant={'plain'} my={2} colorPalette={'blue'} justify={'start'}>
             <Float placement={"top-start"} offsetY={"2"}>
-              <TbShovel />
+              <Icon my={2} ml={2}>
+                <img src="/assets/shovel.png" style={{ height: '3vh', width: '3vh' }} alt="" />
+              </Icon>
             </Float>
             <Blockquote.Content>
               <Heading className="subtitle" size={'md'}>Ministerio Público de la Acusación</Heading>
@@ -37,7 +38,9 @@ export const WorkExp = () => {
 
           <Blockquote.Root variant={'plain'} my={2} colorPalette={'blue'} justify={'end'}>
             <Float placement={"top-end"} offsetY={"2"}>
-              <TbShovel />
+              <Icon my={2} mr={2}>
+                <img src="https://cdn-icons-png.flaticon.com/512/4360/4360026.png" style={{ height: '3vh', width: '3vh' }} alt="" />
+              </Icon>
             </Float>
             <Blockquote.Content>
               <Heading className="subtitle" size={'md'}>Freelancer</Heading>
@@ -56,7 +59,9 @@ export const WorkExp = () => {
 
           <Blockquote.Root variant={'plain'} my={2} colorPalette={'blue'} justify={'start'}>
             <Float placement={"top-start"} offsetY={"2"}>
-              <TbShovel />
+              <Icon my={2} ml={2}>
+                <img src="https://cdn-icons-png.flaticon.com/512/4360/4360026.png" style={{ height: '3vh', width: '3vh' }} alt="" />
+              </Icon>
             </Float>
             <Blockquote.Content>
               <Heading className="subtitle" size={'md'}>Facultad de ciencias economicas</Heading>

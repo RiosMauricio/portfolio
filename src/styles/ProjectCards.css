@@ -1,0 +1,55 @@
+/* From Uiverse.io by Sashank02 */
+.project-cards {
+  padding: 20px;
+  width: 430px;
+  height: 370px;
+  border-radius: 20px;
+  background: linear-gradient(225deg, #56391f, #48301a);
+  box-shadow:  -12px 12px 0px #402a17,
+               12px -12px 0px #604023;
+  transition: 0.4s;
+}
+
+.project-cards:hover {
+  translate: 0 -10px;
+}
+
+.project-cards-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e54a7;
+  margin: 15px 0 0 10px;
+}
+
+.project-cards-image {
+  min-height: 25vh;
+  background-color: rgb(85, 130, 131);
+  width: 350px;
+  border-radius: 10px;
+  /* Opcional, para mejorar la estética */
+  box-shadow: 8px 8px 10px #344850,
+    /* Sombra en la esquina inferior derecha */
+    -8px -8px 10px #344850,
+    /* Sombra en la esquina superior izquierda */
+    8px -8px 10px #344850,
+    /* Sombra en la esquina superior derecha */
+    -8px 8px 10px #344850;
+  /* Sombra en la esquina inferior izquierda */
+}
+
+.project-cards-body {
+  margin: 13px 0 0 10px;
+  color: rgb(246, 246, 246);
+  font-size: 15px;
+}
+
+.footer {
+  float: right;
+  margin: 28px 0 0 18px;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.by-name {
+  font-weight: 700;
+}
