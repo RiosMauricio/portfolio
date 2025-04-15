@@ -12,11 +12,8 @@ export const Projects = () => {
 
   return (
     <Box mt={'50px'} p={4} >
-      {/* <CardSlider /> */}
-
       {/* Renderizamos las tarjetas dinámicamente en un Grid */}
-      <Card.Root size="sm" m={4}           className="global-card"
-      >
+      <Card.Root size="sm" m={4} className="global-card">
         <Card.Header
           justifyContent={'center'}
           alignItems={'center'}

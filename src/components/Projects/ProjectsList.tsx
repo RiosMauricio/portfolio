@@ -1,4 +1,4 @@
-import { Separator, Card, Grid, GridItem, Box } from "@chakra-ui/react";
+import { Separator, Grid, GridItem, Box } from "@chakra-ui/react";
 import { GiRoundKnob, GiSettingsKnobs } from "react-icons/gi";
 import { IoRadioButtonOnOutline } from "react-icons/io5";
 import ReactPlayer from "react-player";
