@@ -1,6 +1,7 @@
 .player-wrapper {
   position: relative;
-  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
+  padding-top: 56.25%;
+  /* 720 / 1280 = 0.5625 */
 }
 
 .react-player {
@@ -10,8 +11,12 @@
   border-radius: 10%;
   overflow: hidden;
   background-color: rgb(114, 114, 114);
+  -webkit-box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
+  -moz-box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
+  box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
+/* 
   -webkit-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
   -moz-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
-  box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
+  box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1); */
   border-radius: 10%;
 }

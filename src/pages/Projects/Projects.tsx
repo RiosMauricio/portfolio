@@ -52,7 +52,7 @@ export const Projects = () => {
 
       {/* Renderizamos las tarjetas dinámicamente en un Grid */}
       <Card.Root size="sm" m={4}>
-        <Card.Header>
+        <Card.Header justifyContent={'center'} alignItems={'center'}>
           <Heading className="subtitle" size={'md'}>Estos son algunos de los proyectos en los que participé.</Heading>
         </Card.Header>
         <Card.Body color="fg.muted">
