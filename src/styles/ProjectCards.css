@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 .player-wrapper {
   position: relative;
   padding-top: 56.25%;
@@ -14,9 +17,89 @@
   -webkit-box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
   -moz-box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
   box-shadow: -1px 3px 16px 7px rgba(219, 219, 219, 1);
-/* 
-  -webkit-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
-  -moz-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
-  box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1); */
   border-radius: 10%;
+}
+
+.shadow-tv {
+  -webkit-box-shadow: 10px 10px 3px 0px rgb(59, 39, 31);
+  -moz-box-shadow: 10px 10px 3px 0px rgba(59, 39, 31);
+  box-shadow: 10px 10px 3px 0px rgba(59, 39, 31);
+}
+
+/* From Uiverse.io by umerhassaan */ 
+/* Yoinked from CodePen, but improved the animation
+so that it is smooth among other more minor things */
+
+.codepen-button {
+  display: block;
+  cursor: pointer;
+  color: white;
+  margin: 0 auto;
+  position: relative;
+  width: 90%;
+  text-decoration: none;
+  font-weight: 60;
+  border-radius: 15px;
+  cursor: initial;
+  overflow: hidden;
+  padding: 2px;
+  isolation: isolate;
+}
+
+.codepen-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 100%;
+  background: linear-gradient(115deg, #d1d1d1, #ac7d58, #a7bfde);
+  background-size: 25% 100%;
+  animation: linear-movement
+    0.75s linear infinite;
+  animation-play-state: running;
+  translate: -5% 0%;
+  transition: translate 0.25s ease-out;
+}
+
+.codepen-button:hover::before {
+  animation-play-state: running;
+  transition-duration: 0.75s;
+  translate: 0% 0%;
+}
+
+@keyframes linear-movement {
+  to {
+    transform: translateX(-25%);
+  }
+}
+
+.codepen-button-content {
+  position: relative;
+  display: block;
+  padding: 1rem 1.5rem;
+  background: #111111;
+  border-radius: 15px;
+  cursor: initial;
+  height: 100%;
+}
+
+.codepen-button-title {
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Nunito sans', sans-serif; /* Agrega la fuente importada */
+}
+
+.codepen-button-text {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  font-family: 'Nunito sans', sans-serif; /* Agrega la fuente importada */
+  color: #A1A1A1;
+}
+
+.first-text {
+  font-family: 'Raleway sans', sans-serif; /* Agrega la fuente importada */
+  color: rgb(238, 238, 238); 
+  font-weight: 100;
 }

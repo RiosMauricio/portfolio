@@ -1,6 +1,6 @@
 import { Card } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
-import "../../styles/AboutMe.css"
+import "@/styles/AboutMe.css"
 
 export const PersonalInfo = () => {
   return (
