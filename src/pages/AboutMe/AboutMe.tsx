@@ -2,6 +2,7 @@ import { Box, Image, Flex, Heading, Icon } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { PersonalInfo } from "@/components/AboutMe/PersonalInfo";
 import { WorkExp } from "@/components/AboutMe/WorkExp";
+import { Education } from "@/components/AboutMe/Education";
 import { useRef } from "react"; // Importa useRef para manejar el desplazamiento
 import "../../styles/AboutMe.css";
 
@@ -49,6 +50,9 @@ export const AboutMe = () => {
 
         {/* Card experiencia */}
         <WorkExp></WorkExp>
+
+        {/* Education */}
+        <Education></Education>
 
       </section>
     </>

@@ -11,12 +11,19 @@ export const Projects = () => {
   }, []);
 
   return (
-    <Box mt={'50px'} p={4}>
+    <Box mt={'50px'} p={4} >
       {/* <CardSlider /> */}
 
       {/* Renderizamos las tarjetas dinámicamente en un Grid */}
-      <Card.Root size="sm" m={4}>
-        <Card.Header justifyContent={'center'} alignItems={'center'} bg={'#27201a'} p={4} backgroundImage="url('/assets/grey.jpg')"        >
+      <Card.Root size="sm" m={4}           className="global-card"
+      >
+        <Card.Header
+          justifyContent={'center'}
+          alignItems={'center'}
+          // bg={'#27201a'}
+          p={4}
+          // backgroundImage="url('/assets/grey.jpg')"
+        >
           <Heading className="first-text" size={'lg'}>
             Estos son algunos proyectos de los que forme parte.
           </Heading>

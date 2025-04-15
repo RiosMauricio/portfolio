@@ -5,7 +5,15 @@ import "@/styles/AboutMe.css"
 export const PersonalInfo = () => {
   return (
     <>
-      <Card.Root size="sm" m={4}>
+      <Card.Root
+        size="sm"
+        m={4}
+        transition="transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out" /* Aplica la transición en todos los estados */
+        _hover={{
+          transform: "scale(1.01)",
+          boxShadow: "0px 10px 20px rgba(255, 255, 255, 0.3)",
+        }}
+      >
         <Card.Header>
           <Heading className="subtitle" size={'md'}>Un poco sobre mí</Heading>
         </Card.Header>

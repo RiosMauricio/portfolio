@@ -26,7 +26,7 @@
   box-shadow: 10px 10px 3px 0px rgba(59, 39, 31);
 }
 
-/* From Uiverse.io by umerhassaan */ 
+/* From Uiverse.io by umerhassaan */
 /* Yoinked from CodePen, but improved the animation
 so that it is smooth among other more minor things */
 
@@ -55,8 +55,7 @@ so that it is smooth among other more minor things */
   height: 100%;
   background: linear-gradient(115deg, #d1d1d1, #ac7d58, #a7bfde);
   background-size: 25% 100%;
-  animation: linear-movement
-    0.75s linear infinite;
+  animation: linear-movement 0.75s linear infinite;
   animation-play-state: running;
   translate: -5% 0%;
   transition: translate 0.25s ease-out;
@@ -87,19 +86,28 @@ so that it is smooth among other more minor things */
 .codepen-button-title {
   font-size: 1rem;
   font-weight: 400;
-  font-family: 'Nunito sans', sans-serif; /* Agrega la fuente importada */
+  font-family: 'Nunito sans', sans-serif;
+  /* Agrega la fuente importada */
 }
 
 .codepen-button-text {
   margin-top: 10px;
   font-size: 0.85rem;
   font-weight: 300;
-  font-family: 'Nunito sans', sans-serif; /* Agrega la fuente importada */
+  font-family: 'Nunito sans', sans-serif;
+  /* Agrega la fuente importada */
   color: #A1A1A1;
 }
 
 .first-text {
-  font-family: 'Raleway sans', sans-serif; /* Agrega la fuente importada */
-  color: rgb(238, 238, 238); 
+  font-family: 'Raleway sans', sans-serif;
+  /* Agrega la fuente importada */
+  color: rgb(238, 238, 238);
   font-weight: 100;
+}
+
+.global-card {
+  background: linear-gradient(225deg, #0f0f0f, #121212);
+  box-shadow: -5px 5px 10px #080808,
+    5px -5px 10px #1a1a1a;
 }
