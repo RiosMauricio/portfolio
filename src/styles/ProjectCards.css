@@ -1,55 +1,17 @@
-/* From Uiverse.io by Sashank02 */
-.project-cards {
-  padding: 20px;
-  width: 430px;
-  height: 370px;
-  border-radius: 20px;
-  background: linear-gradient(225deg, #2a2a2d, #232326);
-  box-shadow: -9px 9px 0px #0b0b0b,
-    19px -19px 0px #37373b;
-  transition: 0.4s;
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
 }
 
-.project-cards:hover {
-  translate: 0 -10px;
-}
-
-.project-cards-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2e54a7;
-  margin: 15px 0 0 10px;
-}
-
-.project-cards-image {
-  min-height: 25vh;
-  background-color: rgb(85, 130, 131);
-  width: 350px;
-  border-radius: 10px;
-  /* Opcional, para mejorar la estética */
-  box-shadow: 8px 8px 10px #344850,
-    /* Sombra en la esquina inferior derecha */
-    -8px -8px 10px #344850,
-    /* Sombra en la esquina superior izquierda */
-    8px -8px 10px #344850,
-    /* Sombra en la esquina superior derecha */
-    -8px 8px 10px #344850;
-  /* Sombra en la esquina inferior izquierda */
-}
-
-.project-cards-body {
-  margin: 13px 0 0 10px;
-  color: rgb(246, 246, 246);
-  font-size: 15px;
-}
-
-.footer {
-  float: right;
-  margin: 28px 0 0 18px;
-  font-size: 13px;
-  color: #ffffff;
-}
-
-.by-name {
-  font-weight: 700;
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10%;
+  overflow: hidden;
+  background-color: rgb(114, 114, 114);
+  -webkit-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
+  -moz-box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
+  box-shadow: -1px 0px 32px 3px rgba(135, 237, 255, 1);
+  border-radius: 10%;
 }

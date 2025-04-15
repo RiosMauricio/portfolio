@@ -12,7 +12,7 @@ export const Projects = () => {
   const cards = [
     {
       videoUrl: 'assets/videoRincones-BpFKGbOM.mp4',
-      bodyText: 'Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.',
+      bodyText: '',
       footerText: 'Written by John Doe on 25/05/23',
       playOn: false
     },
@@ -64,15 +64,42 @@ export const Projects = () => {
             }}
             gap={6} // Espaciado entre las tarjetas
             mt={6}
-            w="100%" // Ocupa todo el ancho disponible
+            w="100%"
+            justifyContent="center" // Asegura el centrado horizontal
+            alignContent="center"   // Centra el contenido verticalmente
           >
             {cards.map((card, index) => (
-              <GridItem key={index} w="100%" h="auto" my={4} ml={1}>
-                <Box className="project-cards" p={4}>
-                  <Grid templateColumns="6fr 1fr" gap={4} alignItems="start">
+              <GridItem key={index} position="relative" mt={8}>
+                {/* Antenas estilo V ajustadas */}
+                <Box
+                  position="absolute"
+                  top="-40px" /* Antenas ligeramente más arriba */
+                  left="30%"
+                  w="2px"
+                  h="45px" /* Altura ligeramente reducida para balance */
+                  bg="grey" /* Color oscuro para mejor contraste */
+                  borderRadius="full"
+                  transform="rotate(-30deg)"
+                  transformOrigin="bottom"
+                />
+                <Box
+                  position="absolute"
+                  top="-40px"
+                  right="30%"
+                  w="2px"
+                  h="45px"
+                  bg="grey"
+                  borderRadius="full"
+                  transform="rotate(30deg)"
+                  transformOrigin="bottom"
+                />
+
+                {/* TV principal */}
+                <Box bg={'#8B4513'} borderRadius={'10%'} w={'85%'} h={'35vh'} margin={'auto'} position="relative">
+                  <Grid templateColumns="8fr 1fr" gap={4}>
                     {/* Columna del video */}
-                    <GridItem>
-                      <div className="project-cards-image">
+                    <GridItem m={4} borderRadius={'10%'}>
+                      <div className='player-wrapper'>
                         <ReactPlayer
                           url={card.videoUrl}
                           width="100%"
@@ -81,24 +108,28 @@ export const Projects = () => {
                           controls
                           loop
                           muted
+                          className='react-player'
                           playbackRate={1.75}
                         />
                       </div>
                     </GridItem>
 
                     {/* Columna de íconos */}
-                    <GridItem>
+                    <GridItem
+                      display="flex"
+                      flexDirection="column"
+                      alignItems="center"
+                      justifyContent="center"
+                      pr={3}
+                      width="80%"
+                    >
                       {[IoRadioButtonOnOutline, GiSettingsKnobs, GiRoundKnob].map((Icon, iconIndex) => (
-                        <div key={iconIndex} style={{ margin: '20px 0' }}>
-                          <Icon color="grey" size="2em" />
+                        <div key={iconIndex} style={{ marginTop: '15px' }}>
+                          <Icon color="#292929" size="1.8em" />
                         </div>
                       ))}
                     </GridItem>
                   </Grid>
-
-                  {/* Texto de contenido */}
-                  <Heading size={'md'} mt={5} className="paragraph">{card.bodyText}</Heading>
-                  <Heading className="footer">{card.footerText}</Heading>
                 </Box>
               </GridItem>
             ))}
