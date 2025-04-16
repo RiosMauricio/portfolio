@@ -9,8 +9,6 @@ export const Demos = () => {
           <div data-name="Home" className="Icon material-icons">face</div>
           <div data-name="Time" className="Icon material-icons">watch_later</div>
           <div data-name="Search" className="Icon material-icons">zoom_in</div>
-          <div data-name="Light" className="Icon material-icons">wb_sunny</div>
-          <div data-name="Video" className="Icon material-icons">voice_chat</div>
         </div>
       </Box>
     </>

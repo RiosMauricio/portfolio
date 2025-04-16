@@ -3,7 +3,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import { PersonalInfo } from "@/components/AboutMe/PersonalInfo";
 import { WorkExp } from "@/components/AboutMe/WorkExp";
 import { Education } from "@/components/AboutMe/Education";
-import { useRef } from "react"; // Importa useRef para manejar el desplazamiento
+import { useRef, useEffect } from "react"; // Importa useRef para manejar el desplazamiento
 import "../../styles/AboutMe.css";
 
 export const AboutMe = () => {
@@ -14,6 +14,10 @@ export const AboutMe = () => {
       aboutMeRef.current.scrollIntoView({ behavior: "smooth" }); // Scroll con efecto suave
     }
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <>
@@ -53,6 +57,19 @@ export const AboutMe = () => {
 
         {/* Education */}
         <Education></Education>
+
+        {/* Card */}
+        <div className="flip-card">
+          <div className="upper-part">
+            <div className="upper-part-face">Hover Me</div>
+            <div className="upper-part-back">Some Additional Information At The Back Side</div>
+          </div>
+          <div className="lower-part">
+            <div className="lower-part-face">Face Side</div>
+            <div className="lower-part-back">Back Side</div>
+          </div>
+        </div>
+
 
       </section>
     </>
