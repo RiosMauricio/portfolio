@@ -53,7 +53,7 @@ so that it is smooth among other more minor things */
   left: 0;
   width: 400%;
   height: 100%;
-  background: linear-gradient(115deg, #d1d1d1, #ac7d58, #a7bfde);
+  background: linear-gradient(115deg, #d1d1d1, #5e3313, #a7bfde);
   background-size: 25% 100%;
   animation: linear-movement 0.75s linear infinite;
   animation-play-state: running;
