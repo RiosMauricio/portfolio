@@ -1,15 +1,19 @@
 import { Box } from "@chakra-ui/react";
 import { useEffect } from "react";
-import { CardSlider } from "@/components/utils/CardSlider";
+import { ShowedDemo } from "@/components/Demos/ShowedDemo";
 import "@/styles/Dock.css";
 import "@/styles/Monitor.css";
+import { useState } from "react"
 
 export const Demos = () => {
+
+  const [open, setOpen] = useState(false);
+  const [showedContent, setShowedContent] = useState('')
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
-  
+
   return (
     <>
       {/* Base del escritorio */}
@@ -31,7 +35,7 @@ export const Demos = () => {
         borderRadius="20px"
         mt={7}
         height="80%"
-        width="90%"
+        width="80%"
         position="absolute"
         top="50%"
         left="50%"
@@ -59,18 +63,20 @@ export const Demos = () => {
           className="screen-shadow"
         >
           {/* CardSlider en la parte superior */}
-          <CardSlider />
+          {/* <CardSlider /> */}
 
           {/* Dock con los íconos */}
           <div className="Dock">
-            <div data-name="Inicio" className="Icon material-icons">home</div>
-            <div data-name="Calendario" className="Icon material-icons">calendar_today</div>
-            <div data-name="Mapa" className="Icon material-icons">public</div>
-            <div data-name="Formularios" className="Icon material-icons">description</div>
+            <div data-name="Estadisticas" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('stats') }}>bar_chart</div>
+            <div data-name="Calendario" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('calendar') }}>calendar_today</div>
+            <div data-name="Mapa" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('map') }}>public</div>
+            <div data-name="Formularios" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('form') }}>description</div>
           </div>
         </Box>
       </Box>
 
+      {/* Ventanas que se abriran al apretar botones del dock */}
+      <ShowedDemo open={open} setOpen={setOpen} mode={showedContent} />
     </>
   );
 };

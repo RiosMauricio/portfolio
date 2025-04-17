@@ -1,0 +1,10 @@
+/* Fondo de los días de la semana */
+.fc .fc-col-header-cell {
+  background-color: #1a202c; /* Fondo oscuro */
+  color: #ffffff; /* Texto blanco */
+}
+
+/* Bordes opcionales entre columnas */
+.fc .fc-col-header-cell {
+  border-color: #2d3748;
+}
