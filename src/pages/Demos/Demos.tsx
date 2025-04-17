@@ -1,29 +1,36 @@
 import { Box } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { CardSlider } from "@/components/utils/CardSlider";
 import "@/styles/Dock.css";
 import "@/styles/Monitor.css";
 
 export const Demos = () => {
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+  
   return (
     <>
       {/* Base del escritorio */}
-      <Box
+      {/* <Box
         position="absolute"
-        bottom="0" /* Asegura que la base esté en la parte inferior */
+        bottom="0"
         left="50%"
         transform="translateX(-50%)"
         width="8%"
-        height="12vh" /* Define una altura para el escritorio */
-        backgroundColor="#2d2d2d" /* Color sólido para simular madera o metal */
-        borderRadius="10px" /* Bordes suavizados */
+        height="10vh"
+        backgroundColor="#2d2d2d"
+        borderRadius="10px"
         className="feet-shadow"
-      ></Box>
+      ></Box> */}
 
       {/* Marco de la pantalla */}
       <Box
         backgroundColor="#1f3e5c"
         borderRadius="20px"
-        mt={6}
-        height="85%"
+        mt={7}
+        height="80%"
         width="90%"
         position="absolute"
         top="50%"
@@ -36,20 +43,24 @@ export const Demos = () => {
       >
         {/* Pantalla interna */}
         <Box
-          height="75vh"
-          width="94%"
+          height="70vh"
+          width="90%"
           position="absolute"
           top="50%"
           left="50%"
           transform="translate(-50%, -50%)"
           display="flex"
-          justifyContent="center"
-          backgroundImage={`url('/assets/wallpaper2.jpg')`}
+          flexDirection="column" /* Cambia a columna para apilar elementos verticalmente */
+          justifyContent="space-between" /* Distribuye los elementos con espacio */
+          backgroundImage={`url('/assets/wallpaper.jpg')`}
           backgroundSize="cover"
           alignItems="center"
           borderRadius="5px"
           className="screen-shadow"
         >
+          {/* CardSlider en la parte superior */}
+          <CardSlider />
+
           {/* Dock con los íconos */}
           <div className="Dock">
             <div data-name="Inicio" className="Icon material-icons">home</div>
