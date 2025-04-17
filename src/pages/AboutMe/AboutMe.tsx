@@ -1,8 +1,7 @@
 import { Box, Image, Flex, Heading, Icon } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { PersonalInfo } from "@/components/AboutMe/PersonalInfo";
-import { WorkExp } from "@/components/AboutMe/WorkExp";
-import { Education } from "@/components/AboutMe/Education";
+import { Formation } from "@/components/AboutMe/Formation";
 import { useRef, useEffect } from "react"; // Importa useRef para manejar el desplazamiento
 import "../../styles/AboutMe.css";
 
@@ -52,24 +51,8 @@ export const AboutMe = () => {
         {/* Card info sobre mi */}
         <PersonalInfo></PersonalInfo>
 
-        {/* Card experiencia */}
-        <WorkExp></WorkExp>
-
-        {/* Education */}
-        <Education></Education>
-
-        {/* Card */}
-        <div className="flip-card">
-          <div className="upper-part">
-            <div className="upper-part-face">Hover Me</div>
-            <div className="upper-part-back">Some Additional Information At The Back Side</div>
-          </div>
-          <div className="lower-part">
-            <div className="lower-part-face">Face Side</div>
-            <div className="lower-part-back">Back Side</div>
-          </div>
-        </div>
-
+        {/* Mi formacion */}
+        <Formation></Formation>
 
       </section>
     </>

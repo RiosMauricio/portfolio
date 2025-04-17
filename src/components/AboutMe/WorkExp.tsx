@@ -8,18 +8,7 @@ import "@/styles/AboutMe.css"
 export const WorkExp = () => {
   return (
     <>
-      <Card.Root
-        size="sm"
-        m={4}
-        transition="transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out" /* Aplica la transición en todos los estados */
-        _hover={{
-          transform: "scale(1.01)",
-          boxShadow: "0px 10px 20px rgba(255, 255, 255, 0.3)",
-        }}
-      >
-        <Card.Header>
-          <Heading className="subtitle" size={'md'}>Mi experiencia</Heading>
-        </Card.Header>
+      <Card.Root border={'transparent'}>
         <Card.Body color="fg.muted">
           <Blockquote.Root variant={'plain'} my={2} colorPalette={'blue'} justify={'start'}>
             <Float placement={"top-start"} offsetY={"2"}>
