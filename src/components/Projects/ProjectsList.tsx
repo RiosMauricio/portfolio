@@ -153,7 +153,7 @@ export const ProjectsList = () => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <div className="codepen-button">
+                <div className="codepen-button project-cards-text">
                   <span className="codepen-button-content">
                     <p className="codepen-button-title">{card.projectTitle}</p>
                     <Separator></Separator>
