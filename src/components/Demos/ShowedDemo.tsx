@@ -28,7 +28,7 @@ export const ShowedDemo = ({ open, setOpen, mode }) => {
         onOpenChange={(e) => setOpen(e.open)}
         placement={'center'}
         motionPreset={'scale'}
-        size={'lg'}
+        size={'xl'}
       >
         <Portal>
           <Dialog.Backdrop
@@ -76,7 +76,7 @@ export const ShowedDemo = ({ open, setOpen, mode }) => {
                 <Button>Save</Button>
               </Dialog.Footer> */}
 
-              <Dialog.CloseTrigger asChild bg={'#692020'} _hover={{backgroundColor: 'red'}}>
+              <Dialog.CloseTrigger asChild bg={'#692020'} _hover={{ backgroundColor: 'red' }}>
                 <CloseButton size="sm" />
               </Dialog.CloseTrigger>
             </Dialog.Content>
