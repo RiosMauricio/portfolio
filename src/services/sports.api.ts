@@ -1,0 +1,13 @@
+import axios from "axios";
+
+const API_URL = "https://www.thesportsdb.com/api/v1/json/3/lookuptable.php?l=4328&s=2020-2021";
+
+export const fetchLeagueData = async (): Promise<any> => {
+  try {
+    const response = await axios.get(API_URL);
+    return response.data; // La API devuelve JSON directamente, no necesita `JSON.parse()`
+  } catch (error) {
+    console.error("Error al obtener datos del jugador:", error);
+    throw new Error("No se pudieron cargar los datos de Lionel Messi.");
+  }
+};

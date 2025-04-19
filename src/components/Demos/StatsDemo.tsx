@@ -1,26 +1,38 @@
 import { useEffect, useState } from "react"
-import { fetchCryptoData } from "@/services/cryptos.api"
+import { fetchLeagueData } from "@/services/sports.api"
+import { NativeSelect } from "@chakra-ui/react"
 
 export const StatsDemo = () => {
-  const [cryptoData, setCryptoData] = useState([]); 
+  const [selectedSeason, setSelectedSeason] = useState('');
+  const [playerData, setPlayerData] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
-  const getCryptosData = async () => {
+  const getPlayerData = async () => {
     try {
-      const data = await fetchCryptoData();
-      setCryptoData(data);
+      const data = await fetchLeagueData();
+      setPlayerData(data);
     } catch (error) {
       setError("Error al cargar los feriados")
     }
   }
 
   useEffect(() => {
-    getCryptosData();
+    getPlayerData();
   }, [])
 
-  console.log(cryptoData);
-  
+  console.log(playerData);
+
   return (
-    <div>lorem*100</div>
+    <>
+      <NativeSelect.Root>
+        <NativeSelect.Field placeholder="Select option">
+          <option value="react">React</option>
+          <option value="vue">Vue</option>
+          <option value="angular">Angular</option>
+          <option value="svelte">Svelte</option>
+        </NativeSelect.Field>
+        <NativeSelect.Indicator />
+      </NativeSelect.Root>
+    </>
   )
 }
