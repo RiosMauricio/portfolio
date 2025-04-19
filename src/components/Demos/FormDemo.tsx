@@ -1,12 +1,20 @@
-import { Box, Button, Input } from "@chakra-ui/react";
+import {
+  Button,
+  Field,
+  Fieldset,
+  Input
+} from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+// Esquema de validación con Yup
 const schema = yup.object().shape({
-  name: yup.string().required("El nombre es obligatorio"),
-  email: yup.string().email("Debe ser un correo válido").required("El correo es obligatorio"),
-  password: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es obligatoria"),
+  nombre: yup.string().required("El nombre es obligatorio"),
+  apellido: yup.string().required("El apellido es obligatorio"),
+  correo: yup.string().email("El correo debe ser válido").required("El correo es obligatorio"),
+  contraseña: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es obligatoria"),
+  telefono: yup.string().matches(/^[0-9]+$/, "El número de teléfono debe contener solo números").required("El número de teléfono es obligatorio"),
 });
 
 export const FormDemo = () => {
@@ -19,46 +27,79 @@ export const FormDemo = () => {
   };
 
   return (
-    <Box p="20px" borderRadius="10px" boxShadow="md" bg="white">
+    <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Nombre */}
-        <Controller
-          name="name"
-          control={control}
-          render={({ field }) => (
-            <Box mb="4">
-              <Input {...field} placeholder="Nombre" />
-              {/* {errors.name && <FormErrorMessage>{errors.name.message}</FormErrorMessage>} */}
-            </Box>
-          )}
-        />
+        <Fieldset.Root size="lg">
+          <Fieldset.Content>
+            {/* Nombre */}
+            <Field.Root invalid={!!errors.nombre}>
+              <Field.Label>Nombre</Field.Label>
+              <Controller
+                name="nombre"
+                control={control}
+                render={({ field }) => <Input {...field} placeholder="Ingresa tu nombre" />}
+              />
+              <p style={{ color: "red" }}>{errors.nombre?.message}</p>
+            </Field.Root>
 
-        {/* Email */}
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Box mb="4">
-              <Input {...field} placeholder="Correo" />
-              {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
-            </Box>
-          )}
-        />
+            {/* Apellido */}
+            <Field.Root invalid={!!errors.apellido}>
+              <Field.Label>Apellido</Field.Label>
+              <Controller
+                name="apellido"
+                control={control}
+                render={({ field }) => <Input {...field} placeholder="Ingresa tu apellido" />}
+              />
+              <p style={{ color: "red" }}>{errors.apellido?.message}</p>
+            </Field.Root>
 
-        {/* Contraseña */}
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Box mb="4">
-              <Input {...field} placeholder="Contraseña" type="password" />
-              {errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
-            </Box>
-          )}
-        />
+            {/* Correo */}
+            <Field.Root invalid={!!errors.correo}>
+              <Field.Label>Correo Electrónico</Field.Label>
+              <Controller
+                name="correo"
+                control={control}
+                render={({ field }) => <Input {...field} type="email" placeholder="Ingresa tu correo electrónico" />}
+              />
+              <p style={{ color: "red" }}>{errors.correo?.message}</p>
+            </Field.Root>
 
-        <Button type="submit" colorScheme="blue">Registrarse</Button>
+            {/* Contraseña */}
+            <Field.Root invalid={!!errors.contraseña}>
+              <Field.Label>Contraseña</Field.Label>
+              <Controller
+                name="contraseña"
+                control={control}
+                render={({ field }) => <Input {...field} type="password" placeholder="Ingresa tu contraseña" />}
+              />
+              <p style={{ color: "red" }}>{errors.contraseña?.message}</p>
+            </Field.Root>
+
+            {/* Teléfono */}
+            <Field.Root invalid={!!errors.telefono}>
+              <Field.Label>Teléfono</Field.Label>
+              <Controller
+                name="telefono"
+                control={control}
+                render={({ field }) => <Input {...field} type="tel" placeholder="Ingresa tu número de teléfono" />}
+              />
+              <p style={{ color: "red" }}>{errors.telefono?.message}</p>
+            </Field.Root>
+          </Fieldset.Content>
+
+          {/* Mensaje de error general */}
+          {Object.keys(errors).length > 0 && (
+            <Fieldset.ErrorText>
+              Algunos campos son inválidos. Por favor, verifica la información.
+            </Fieldset.ErrorText>
+          )}
+
+          {/* Botón de envío */}
+          <Button type="submit" colorScheme="blue" mt={4}>
+            Registrarse
+          </Button>
+        </Fieldset.Root>
       </form>
-    </Box>
+    </>
   );
 };

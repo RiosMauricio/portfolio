@@ -28,7 +28,7 @@ export const ShowedDemo = ({ open, setOpen, mode }) => {
         onOpenChange={(e) => setOpen(e.open)}
         placement={'center'}
         motionPreset={'scale'}
-        size={'xl'}
+        size={mode === 'form' ? 'lg' : 'xl'}
       >
         <Portal>
           <Dialog.Backdrop
