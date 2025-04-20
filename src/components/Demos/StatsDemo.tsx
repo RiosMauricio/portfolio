@@ -7,13 +7,19 @@ import { BarSegment } from "@chakra-ui/charts"
 
 export const StatsDemo = () => {
   const [selectedSeason, setSelectedSeason] = useState('2023-2024');
+  const [selectedLeague, setSelectedLeague] = useState('4328')
   const [leagueInfo, setLeagueInfo] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const seasons = ["2020-2021", "2021-2022", "2022-2023", "2023-2024"];
+  const leagues = [
+    { id: "4328", name: "Premier League" },
+    { id: "4332", name: "Serie A" },
+    { id: "4331", name: "Bundesliga" },
+  ];
 
   const getLeagueInfo = async (season: string) => {
     try {
-      const data = await fetchLeagueData(season);
+      const data = await fetchLeagueData(season, selectedLeague);
       console.log(data);
       setLeagueInfo(data?.table);
     } catch (error) {
@@ -22,12 +28,12 @@ export const StatsDemo = () => {
   };
 
   useEffect(() => {
-    getLeagueInfo(selectedSeason);
-  }, [selectedSeason]);
+    getLeagueInfo(selectedSeason, selectedLeague);
+  }, [selectedSeason, selectedLeague]);
 
   const barChart = useChart<BarListData>({
     sort: { by: "value", direction: "desc" },
-    data: leagueInfo.map((e) => ({
+    data: leagueInfo?.map((e) => ({
       name: e.strTeam,
       value: e.intPoints,
     })),
@@ -46,33 +52,72 @@ export const StatsDemo = () => {
 
   return (
     <>
+      <Grid
+        templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} // 1 columna en pantallas pequeñas, 2 en medianas/grandes
+        gap={4} // Espaciado entre las columnas
+      >
+        <GridItem>
 
-      <div style={{ padding: "20px" }}>
-        {/* Dropdown nativo */}
-        <label htmlFor="season-select" style={{ marginRight: "10px" }}>
-          Temporada:
-        </label>
-        <select
-          id="season-select"
-          value={selectedSeason}
-          onChange={(e) => setSelectedSeason(e.target.value)}
-          style={{
-            padding: "5px",
-            fontSize: "16px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
-        >
-          {seasons.map((season) => (
-            <option key={season} value={season}>
-              {season}
-            </option>
-          ))}
-        </select>
+          <div style={{ padding: "20px" }}>
+            {/* Dropdown nativo */}
+            <label htmlFor="league-select" style={{ marginRight: "10px" }}>
+              Liga:
+            </label>
+            <select
+              id="league-select"
+              value={selectedLeague} // Cambia "selectedSeason" por "selectedLeague"
+              onChange={(e) => setSelectedLeague(e.target.value)} // Cambia el estado de la liga seleccionada
+              style={{
+                padding: "5px",
+                fontSize: "16px",
+                borderRadius: "5px",
+                width: "100%",
+                border: "1px solid #ccc",
+              }}
+            >
+              {leagues.map((league) => (
+                <option key={league.id} value={league.id}>
+                  {league.name}
+                </option>
+              ))}
+            </select>
 
-        {/* Muestra error si ocurre */}
-        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-      </div>
+            {/* Muestra error si ocurre */}
+            {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+          </div>
+        </GridItem>
+        <GridItem>
+          <div style={{ padding: "20px" }}>
+            {/* Dropdown nativo */}
+            <label htmlFor="season-select">
+              Temporada:
+            </label>
+            <select
+              id="season-select"
+              value={selectedSeason}
+              onChange={(e) => setSelectedSeason(e.target.value)}
+              style={{
+                padding: "5px",
+                fontSize: "16px",
+                borderRadius: "5px",
+                width: "100%",
+                border: "1px solid #ccc",
+              }}
+            >
+              {seasons.map((season) => (
+                <option key={season} value={season}>
+                  {season}
+                </option>
+              ))}
+            </select>
+
+            {/* Muestra error si ocurre */}
+            {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+          </div>
+        </GridItem>
+
+      </Grid>
+
 
       {
         leagueInfo.length === 0 ? (
@@ -84,7 +129,6 @@ export const StatsDemo = () => {
             </Stack>
           </HStack>
         ) : (
-          
           // Graficos con estadisticas de la liga
           <Grid
             templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} // 1 columna en pantallas pequeñas, 2 en medianas/grandes
