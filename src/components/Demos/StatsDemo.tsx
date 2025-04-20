@@ -37,16 +37,16 @@ export const StatsDemo = () => {
       name: e.strTeam,
       value: e.intPoints,
     })),
-    series: [{ name: "name", color: "teal.subtle" }],
+    series: [{ name: "name", color: "#85a951" }],
   })
 
   const barSegment = useChart({
     sort: { by: "value", direction: "desc" },
     data: [
-      { name: "PJ", value: parseInt(leagueInfo[0]?.intPlayed), color: "teal.solid" },
-      { name: "V", value: parseInt(leagueInfo[0]?.intWin), color: "blue.solid" },
-      { name: "E", value: parseInt(leagueInfo[0]?.intDraw), color: "orange.solid" },
-      { name: "D", value: parseInt(leagueInfo[0]?.intLoss), color: "purple.solid" },
+      { name: "PJ", value: parseInt(leagueInfo[0]?.intPlayed), color: "blue.solid" },
+      { name: "V", value: parseInt(leagueInfo[0]?.intWin), color: "green.solid" },
+      { name: "E", value: parseInt(leagueInfo[0]?.intDraw), color: "#ddd763" },
+      { name: "D", value: parseInt(leagueInfo[0]?.intLoss), color: "red.solid" },
     ],
   })
 
@@ -115,9 +115,7 @@ export const StatsDemo = () => {
             {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
           </div>
         </GridItem>
-
       </Grid>
-
 
       {
         leagueInfo.length === 0 ? (
@@ -134,7 +132,7 @@ export const StatsDemo = () => {
             templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} // 1 columna en pantallas pequeñas, 2 en medianas/grandes
             gap={4} // Espaciado entre las columnas
           >
-            <GridItem>
+            <GridItem bg={'#1f3e5c'} p={2} borderRadius={3}>
               <BarList.Root chart={barChart}>
                 <BarList.Content>
                   <BarList.Bar />
@@ -142,7 +140,7 @@ export const StatsDemo = () => {
                 </BarList.Content>
               </BarList.Root>
             </GridItem>
-            <GridItem>
+            <GridItem bg={'#1f3e5c'} p={2} borderRadius={3}>
               <Box
                 display={'flex'}
                 flexDirection={'column'} // Apila los elementos verticalmente
