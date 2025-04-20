@@ -31,7 +31,8 @@ export const Demos = () => {
 
       {/* Marco de la pantalla */}
       <Box
-        backgroundColor="#1f3e5c"
+        // backgroundColor="#1f3e5c"
+        backgroundImage={`url('/assets/mteal.jpg')`}
         borderRadius="20px"
         mt={7}
         height="80%"

@@ -5,9 +5,9 @@
 }
 
 .monitor-shadow {
-  -webkit-box-shadow: 13px -8px 3px 5px rgba(15,31,46,1);
-  -moz-box-shadow: 13px -8px 3px 5px rgba(15,31,46,1);
-  box-shadow: 13px -8px 3px 5px rgba(15,31,46,1);
+  -webkit-box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
+  -moz-box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
+  box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
 }
 
 .feet-shadow {

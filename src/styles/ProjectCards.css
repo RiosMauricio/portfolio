@@ -99,6 +99,15 @@ so that it is smooth among other more minor things */
   color: #A1A1A1;
 }
 
+.codepen-button-footer {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 300;
+  font-family: 'Nunito sans', sans-serif;
+  color: #ffffff;
+  text-align: right; /* Alinea el texto a la derecha */
+}
+
 .first-text {
   font-family: 'Raleway sans', sans-serif;
   /* Agrega la fuente importada */
