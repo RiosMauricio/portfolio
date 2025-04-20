@@ -3,7 +3,8 @@ import { FaChevronDown } from "react-icons/fa6";
 import { PersonalInfo } from "@/components/AboutMe/PersonalInfo";
 import { Formation } from "@/components/AboutMe/Formation";
 import { useRef, useEffect } from "react"; // Importa useRef para manejar el desplazamiento
-import "../../styles/AboutMe.css";
+import "@/styles/AboutMe.css";
+import "@/styles/GeneralAnimations.css"
 
 export const AboutMe = () => {
   const aboutMeRef = useRef(null); // Creamos una referencia para la sección AboutMe
@@ -19,7 +20,7 @@ export const AboutMe = () => {
   }, []);
 
   return (
-    <>
+    <div className="tab-content">
       {/* Box de vista de entrada */}
       <Box color="white" p={4} borderRadius="md" height="calc(100vh - 50px)" pt="70px">
         <Flex justify="center" align="center" height="100%" flexDirection="row" gap={6}>
@@ -55,6 +56,6 @@ export const AboutMe = () => {
         <Formation></Formation>
 
       </section>
-    </>
+    </div>
   );
 };

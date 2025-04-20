@@ -1,0 +1,14 @@
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.tab-content {
+  animation: slideInLeft 0.5s ease-in-out;
+}

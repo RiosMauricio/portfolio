@@ -11,7 +11,7 @@ export const Projects = () => {
   }, []);
 
   return (
-    <Box p={4}>
+    <Box p={4} className="tab-content">
       {/* Renderizamos las tarjetas dinámicamente en un Grid */}
       <Card.Root size="sm" m={4} bg={'transparent'} border={'none'}>
         <Card.Header

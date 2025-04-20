@@ -67,10 +67,10 @@ export const Demos = () => {
 
           {/* Dock con los íconos */}
           <div className="Dock">
-            <div data-name="Estadisticas" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('stats') }}>bar_chart</div>
-            <div data-name="Calendario" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('calendar') }}>calendar_today</div>
+            <div data-name="Estadisticas" className="Icon material-icons tab-content" onClick={() => { setOpen(true), setShowedContent('stats') }}>bar_chart</div>
+            <div data-name="Calendario" className="Icon material-icons tab-content" onClick={() => { setOpen(true), setShowedContent('calendar') }}>calendar_today</div>
             {/* <div data-name="Mapa" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('map') }}>public</div> */}
-            <div data-name="Formularios" className="Icon material-icons" onClick={() => { setOpen(true), setShowedContent('form') }}>description</div>
+            <div data-name="Formularios" className="Icon material-icons tab-content" onClick={() => { setOpen(true), setShowedContent('form') }}>description</div>
           </div>
         </Box>
       </Box>
