@@ -2,8 +2,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import dayjs from "dayjs"
 import '@/styles/Calendar.css';
 import { fetchFeriados } from "@/services/calendar.api";
 
@@ -15,7 +14,10 @@ export const CalendarDemo = () => {
     try {
       const data = await fetchFeriados();
       const eventsMap = data.map(element => {
-        return ({ title: element.nombre, start: new Date(element.fecha) })
+        return {
+          title: element.nombre,
+          start: dayjs(element.fecha).toDate()
+        };
       });
 
       setEvents(eventsMap);
