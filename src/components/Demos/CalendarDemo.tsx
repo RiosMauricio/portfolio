@@ -9,11 +9,15 @@ import { fetchFeriados } from "@/services/calendar.api";
 export const CalendarDemo = () => {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState<string | null>(null);
+  interface Feriado {
+    nombre: string;
+    fecha: string; // o Date si es que la fecha ya es un objeto Date
+  }
 
   const loadFeriados = async () => {
     try {
       const data = await fetchFeriados();
-      const eventsMap = data.map(element => {
+      const eventsMap = data.map((element: Feriado) => {
         return {
           title: element.nombre,
           start: dayjs(element.fecha).toDate()
@@ -22,12 +26,13 @@ export const CalendarDemo = () => {
 
       setEvents(eventsMap);
     } catch (error) {
-      setError("Error al cargar los feriados")
+      setError("Error al cargar los feriados");
     }
   }
 
   useEffect(() => {
     loadFeriados();
+    console.log(error);
   }, [])
 
   return (

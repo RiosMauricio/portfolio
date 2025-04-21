@@ -16,43 +16,43 @@ export const Header = () => {
       <Box bg="gray.900" p={2} w={80} borderRadius={6} boxShadow="md">
         <Grid templateColumns="repeat(3, 1fr)" gap={4}>
           <GridItem>
-            <Button
-              bg="gray.900"
-              colorScheme="blue"
-              _hover={{ backgroundColor: "blue.900" }}
-              variant="subtle"
-              size="md"
-              as={Link}
-              to='/'
-            >
-              About me
-            </Button>
+            <Link to="/">
+              <Button
+                bg="gray.900"
+                colorScheme="blue"
+                _hover={{ backgroundColor: "blue.900" }}
+                variant="subtle"
+                size="md"
+              >
+                About me
+              </Button>
+            </Link>
           </GridItem>
           <GridItem>
-            <Button
-              bg="gray.900"
-              colorScheme="blue"
-              _hover={{ backgroundColor: "blue.900" }}
-              variant="subtle"
-              size="md"
-              as={Link}
-              to='/projects'
-            >
-              Projects
-            </Button>
+            <Link to="/projects">
+              <Button
+                bg="gray.900"
+                colorScheme="blue"
+                _hover={{ backgroundColor: "blue.900" }}
+                variant="subtle"
+                size="md"
+              >
+                Projects
+              </Button>
+            </Link>
           </GridItem>
           <GridItem>
-            <Button
-              bg="gray.900"
-              colorScheme="blue"
-              _hover={{ backgroundColor: "blue.900" }}
-              variant="subtle"
-              size="md"
-              as={Link}
-              to='/demos'
-            >
-              Demos
-            </Button>
+            <Link to="/demos">
+              <Button
+                bg="gray.900"
+                colorScheme="blue"
+                _hover={{ backgroundColor: "blue.900" }}
+                variant="subtle"
+                size="md"
+              >
+                Demos
+              </Button>
+            </Link>
           </GridItem>
         </Grid>
       </Box>

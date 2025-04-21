@@ -7,7 +7,7 @@ import "@/styles/AboutMe.css";
 import "@/styles/GeneralAnimations.css"
 
 export const AboutMe = () => {
-  const aboutMeRef = useRef(null); // Creamos una referencia para la sección AboutMe
+  const aboutMeRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToSection = () => {
     if (aboutMeRef.current) {

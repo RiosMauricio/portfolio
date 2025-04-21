@@ -20,7 +20,15 @@ const schema = yup.object().shape({
 });
 
 export const FormDemo = () => {
-  const [users, setUsers] = useState([]);
+  type User = {
+    id: number;
+    nombre: string;
+    apellido: string;
+    correo: string;
+    telefono: string;
+  };
+
+  const [users, setUsers] = useState<User[]>([]);
 
   const initialValues = {
     nombre: '',
