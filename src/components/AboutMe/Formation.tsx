@@ -2,10 +2,14 @@ import { Card } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
 import { Tabs } from "@chakra-ui/react"
 import { MdOutlineWorkOutline } from "react-icons/md";
+import { VscTools } from "react-icons/vsc";
 import { WorkExp } from "./WorkExp";
 import { Education } from "./Education";
+import { Skills } from "./Skills";
 import { LuNotebookPen } from "react-icons/lu";
+import { BsPhone } from "react-icons/bs";
 import "@/styles/AboutMe.css"
+import { Contact } from "./Contact";
 
 export const Formation = () => {
   return (
@@ -33,6 +37,14 @@ export const Formation = () => {
                 <LuNotebookPen />
                 Educación
               </Tabs.Trigger>
+              <Tabs.Trigger value="contact">
+                <BsPhone />
+                Contacto
+              </Tabs.Trigger>
+              <Tabs.Trigger value="skills">
+                <VscTools />
+                Habilidades
+              </Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content value="works" _open={{
               animationName: "fade-in, scale-in",
@@ -53,6 +65,26 @@ export const Formation = () => {
                 animationDuration: "120ms",
               }}>
               <Education></Education>
+            </Tabs.Content>
+            <Tabs.Content value="contact" _open={{
+              animationName: "fade-in, scale-in",
+              animationDuration: "300ms",
+            }}
+              _closed={{
+                animationName: "fade-out, scale-out",
+                animationDuration: "120ms",
+              }}>
+              <Contact></Contact>
+              <Tabs.Content value="skills" _open={{
+                animationName: "fade-in, scale-in",
+                animationDuration: "300ms",
+              }}
+                _closed={{
+                  animationName: "fade-out, scale-out",
+                  animationDuration: "120ms",
+                }}>
+                <Skills></Skills>
+              </Tabs.Content>
             </Tabs.Content>
           </Tabs.Root>
         </Card.Body>

@@ -10,28 +10,28 @@ export const ProjectsList = () => {
       videoUrl: 'assets/videoMapa.mp4',
       projectTitle: 'Mapa de herramientas.',
       bodyText: 'Desarrollé un mapa de herramientas para el alta y baja de marcadores personalizados utilizando la API oficial de Google maps, renderizando los mismos de acuerdo a la zona mostrada en pantalla. Se gestionaron los estados de las herramientas activas con Redux toolkit.',
-      footerText: 'Rol: Front-end',
+      footerText: 'Rol: Front-end developer con React',
       playOn: false
     },
     {
       videoUrl: 'assets/agenda.mp4',
       projectTitle: 'Agenda de turnos.',
       bodyText: 'Desarrollé una agenda para la gestión ordenada de turnos del ministerio de salud de mi provincia. El mismo carga automaticamente la información del/los turnos desde la base de datos y permite administrar sus estados de manera rapida y sencilla. Se utilizo Redux toolkit para metodos y estados.',
-      footerText: 'Rol: Front-end',
+      footerText: 'Rol: Front-end developer con React',
       playOn: false
     },
     {
       videoUrl: 'assets/formVideo.mp4',
       projectTitle: 'Dashboard para calculos de costos.',
       bodyText: 'Desarrollé un dashboard para gestionar pedidos de información de costos, mediante el cual se calculan los precios de los insumos utilizados en cada pedido a traves de indices especificados por el usuario, ademas de contar con el resto de operaciones necesarias en el sector, como editar o asignar responsable, eliminar pedido, etc. ',
-      footerText: 'Rol: Front-end',
+      footerText: 'Rol: Front-end developer con React',
       playOn: false
     },
     {
       videoUrl: 'assets/videoRincones-BpFKGbOM.mp4',
       projectTitle: 'Sistema de check-in para hotel.',
       bodyText: 'Participé en el desarrollo de un sistema de registro de ingresos en mi provincia, registrando la entrada al establecimiento con un formulario de ingreso y la posibilidad de firmar mediante canvas en pantalla. Además, es posible administrar empleados mediante permisos almacenados en base de datos.',
-      footerText: 'Rol: Fullstack',
+      footerText: 'Rol: Fullstack con Angular, NodeJs y MongoDB',
       playOn: true
     },
     {
