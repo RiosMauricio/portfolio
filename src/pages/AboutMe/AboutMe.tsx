@@ -2,7 +2,7 @@ import { Box, Image, Flex, Heading, Icon } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa6";
 import { PersonalInfo } from "@/components/AboutMe/PersonalInfo";
 import { Formation } from "@/components/AboutMe/Formation";
-import { useRef, useEffect } from "react"; // Importa useRef para manejar el desplazamiento
+import { useRef, useState, useEffect } from "react"; // Importa useRef para manejar el desplazamiento
 import "@/styles/AboutMe.css";
 import "@/styles/GeneralAnimations.css"
 
@@ -15,25 +15,32 @@ export const AboutMe = () => {
     }
   };
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    // Agregamos el listener para "resize"
+    window.addEventListener("resize", handleResize);
+    // Limpiamos el listener al desmontar el componente
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   return (
-    <div className="tab-content">
+    <div className="tab-content" style={{ border: '1px solid transparent' }}>
       {/* Box de vista de entrada */}
       <Box color="white" p={4} borderRadius="md" height="calc(100vh - 50px)" pt="70px">
-        <Flex justify="center" align="center" height="100%" flexDirection="row" gap={6}>
+        <Flex justify="center" align="center" height="100%" flexDirection={screenWidth > 767 ? "row" : 'column'} gap={6}>
           <Image
             src="assets/1656613.png"
             boxSize="300px"
             borderRadius="full"
             fit="cover"
           />
-          <Flex flexDirection="column" align="flex-start">
-            <Heading className="titleName" size="6xl" mb={9}>HOLA, SOY MAURICIO RIOS.</Heading>
-            <Heading className="subtitle" size="2xl" fontWeight="normal">Software developer.</Heading>
-            <Heading className="subtitle" size="2xl" fontWeight="normal">Analista programador universitario.</Heading>
+          <Flex flexDirection="column" alignItems={screenWidth > 767 ? 'start' : 'center'}>
+            <Heading className="titleName" size={screenWidth > 767 ? "6xl" : '3xl'} mb={9}>HOLA, SOY MAURICIO RIOS.</Heading>
+            <Heading className="subtitle" size={screenWidth > 767 ? "2xl" : 'xl'} fontWeight="normal">Software developer.</Heading>
+            <Heading className="subtitle" size={screenWidth > 767 ? "2xl" : 'xl'} fontWeight="normal">Analista Programador.</Heading>
           </Flex>
         </Flex>
       </Box>

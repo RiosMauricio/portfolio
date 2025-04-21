@@ -25,6 +25,7 @@
   transform: translateX(-50%); /* Ajusta el centrado */
   padding: 0px 30px;
   perspective: 100px;
+  text-align: center;
 }
 
 .Dock:before {
