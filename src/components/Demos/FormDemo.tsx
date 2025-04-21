@@ -2,11 +2,13 @@ import {
   Button,
   Field,
   Fieldset,
-  Input
+  Input,
+  Table
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useState } from "react";
 
 // Esquema de validación con Yup
 const schema = yup.object().shape({
@@ -18,12 +20,29 @@ const schema = yup.object().shape({
 });
 
 export const FormDemo = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const [users, setUsers] = useState([]);
+
+  const initialValues = {
+    nombre: '',
+    apellido: '',
+    correo: '',
+    contraseña: '',
+    telefono: ''
+  };
+
+  const { control, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: any) => {
     console.log("Datos enviados:", data);
+
+    // Hacer una copia de los datos antes de que se reinicie el formulario
+    const newUser = { ...data, id: users.length };
+
+    setUsers((prevUsers) => [...prevUsers, newUser]);
+
+    reset(initialValues);
   };
 
   return (
@@ -100,6 +119,32 @@ export const FormDemo = () => {
           </Button>
         </Fieldset.Root>
       </form>
+
+      {/* Tabla de usuarios */}
+      {
+        users.length > 0 && (
+          <Table.Root size="md" mt={2}>
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader>Nombre</Table.ColumnHeader>
+                <Table.ColumnHeader>Apellido</Table.ColumnHeader>
+                <Table.ColumnHeader>Correo Electrónico</Table.ColumnHeader>
+                <Table.ColumnHeader>Teléfono</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {users.map((user) => (
+                <Table.Row key={user.id}>
+                  <Table.Cell>{user.nombre}</Table.Cell>
+                  <Table.Cell>{user.apellido}</Table.Cell>
+                  <Table.Cell>{user.correo}</Table.Cell>
+                  <Table.Cell>{user.telefono}</Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        )
+      }
     </>
   );
 };

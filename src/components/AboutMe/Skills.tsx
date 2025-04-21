@@ -10,9 +10,6 @@ export const Skills = () => {
         Forme parte de proyectos donde empleé diversas tecnologías. En el desarrollo frontend, implementé TypeScript con Angular y 
         JavaScript con React, adaptándome a las necesidades específicas de cada proyecto. Para el desarrollo backend, trabajé con 
         NodeJs y gestioné las bases de datos con MongoDB para esquemas no relacionales y MySql para bases de datos relacionales.
-        {/* Formé parte de proyectos utilizando diversas tecnologías, destacando Angular y React para el desarrollo frontend implementando
-        typescript y javascript para cada entorno respectivamente; Node.js para el backend, y en la gestión de bases de datos, trabajé con MongoDB para sistemas no relacionales y MySQL
-        para sistemas relacionales. */}
       </Heading>
       <CardSlider></CardSlider>
     </Box>

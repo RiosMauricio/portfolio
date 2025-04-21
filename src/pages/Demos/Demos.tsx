@@ -8,7 +8,17 @@ import { useState } from "react"
 export const Demos = () => {
 
   const [open, setOpen] = useState(false);
-  const [showedContent, setShowedContent] = useState('')
+  const [showedContent, setShowedContent] = useState('');
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    // Agregamos el listener para "resize"
+    window.addEventListener("resize", handleResize);
+    // Limpiamos el listener al desmontar el componente
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -57,15 +67,13 @@ export const Demos = () => {
           display="flex"
           flexDirection="column" /* Cambia a columna para apilar elementos verticalmente */
           justifyContent="space-between" /* Distribuye los elementos con espacio */
-          backgroundImage={`url('/assets/wallpaper.jpg')`}
+          backgroundImage={screenWidth > 767 ? `url('/assets/wallpaper.jpg')` : `url('/assets/phoneWallpaper.jpg')`}
           backgroundSize="cover"
           alignItems="center"
           borderRadius="5px"
           className="screen-shadow"
         >
-          {/* CardSlider en la parte superior */}
-          {/* <CardSlider /> */}
-
+          
           {/* Dock con los íconos */}
           <div className="Dock">
             <div data-name="Estadisticas" className="Icon material-icons tab-content" onClick={() => { setOpen(true), setShowedContent('stats') }}>bar_chart</div>
