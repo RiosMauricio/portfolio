@@ -9,7 +9,14 @@ import { MapDemo } from "./MapDemo";
 import { FormDemo } from "./FormDemo";
 import { StatsDemo } from "./StatsDemo";
 
-export const ShowedDemo = ({ open, setOpen, mode }) => {
+// Tipar las props del componente
+interface ShowedDemoProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;  // Función que actualiza el estado de open
+  mode: string;
+}
+
+export const ShowedDemo = ({ open, setOpen, mode }: ShowedDemoProps) => {
   const dialogTitles: Record<string, string> = {
     stats: "Estadísticas",
     calendar: "CALENDARIO",
@@ -84,5 +91,5 @@ export const ShowedDemo = ({ open, setOpen, mode }) => {
         </Portal>
       </Dialog.Root>
     </>
-  )
+  );
 }

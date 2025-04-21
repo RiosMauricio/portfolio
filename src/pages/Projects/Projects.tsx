@@ -1,6 +1,5 @@
-import { CardSlider } from "@/components/utils/CardSlider";
 import { ProjectsList } from "@/components/Projects/ProjectsList"
-import { Box, Card, Heading } from "@chakra-ui/react";
+import { Box, Card } from "@chakra-ui/react";
 import { useEffect } from "react";
 import '@/styles/ProjectCards.css';
 import '@/styles/AboutMe.css';
