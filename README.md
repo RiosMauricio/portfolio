@@ -2,7 +2,7 @@
 
 ¡Hola! Soy Mauricio Ríos, Analista Programador Universitario y Desarrollador Full Stack. Este proyecto sirve como mi portafolio digital, una plataforma para exhibir mi experiencia, mis habilidades técnicas y algunos de los proyectos en los que participé.
 
-** Accede a este protfolio con este enlade: https://rios-mauricio.netlify.app/ **
+**Accede a este portfolio con este enlace: https://rios-mauricio.netlify.app/**
 
 ## ⚙️ Stack Tecnológico
 Este proyecto fue construido utilizando las siguientes tecnologias:
