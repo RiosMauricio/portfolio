@@ -19,7 +19,7 @@ export const PersonalInfo = () => {
         </Card.Header>
         <Card.Body color="fg.muted">
           <p className="paragraph">
-            ¡Hola! Soy Mauricio, un desarrollador web y analista programador universitario de 22 años con experiencia en proyectos individuales y colaborativos.
+            ¡Hola! Soy Mauricio, un desarrollador web y analista programador universitario de 23 años con experiencia en proyectos individuales y colaborativos.
             A lo largo de mi trayectoria, he trabajado con diversas tecnologías, adaptándome rápidamente a diferentes entornos y roles. Me destaco por ser una persona social,
             con excelentes habilidades de comunicación y versatilidad tanto técnica como profesional.
             Mi objetivo es crecer constantemente en mi carrera, aprendiendo y adquiriendo nuevas habilidades que me permitan llevar cada proyecto al siguiente nivel y superar mis propios estándares.
