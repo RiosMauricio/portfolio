@@ -8,9 +8,11 @@ import { Skills } from "./Skills";
 import { LuNotebookPen } from "react-icons/lu";
 import { BsPhone } from "react-icons/bs";
 import { Contact } from "./Contact";
+import { useLanguage } from "@/i18n/languageContext";
 
 export const Formation = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -33,7 +35,7 @@ export const Formation = () => {
       >
         <Card.Header>
           <Heading className="subtitle" size="md">
-            Mi formación
+            {t.formation.title}
           </Heading>
         </Card.Header>
         <Card.Body color="fg.muted">
@@ -41,19 +43,19 @@ export const Formation = () => {
             <Tabs.List>
               <Tabs.Trigger value="works">
                 <MdOutlineWorkOutline />
-                {screenWidth > 767 && <>Trabajos</>}
+                {screenWidth > 767 && <>{t.formation.tabs.works}</>}
               </Tabs.Trigger>
               <Tabs.Trigger value="education">
                 <LuNotebookPen />
-                {screenWidth > 767 && <>Educación</>}
+                {screenWidth > 767 && <>{t.formation.tabs.education}</>}
               </Tabs.Trigger>
               <Tabs.Trigger value="skills">
                 <VscTools />
-                {screenWidth > 767 && <>Habilidades</>}
+                {screenWidth > 767 && <>{t.formation.tabs.skills}</>}
               </Tabs.Trigger>
               <Tabs.Trigger value="contact">
                 <BsPhone />
-                {screenWidth > 767 && <>Contacto</>}
+                {screenWidth > 767 && <>{t.formation.tabs.contact}</>}
               </Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content value="works">

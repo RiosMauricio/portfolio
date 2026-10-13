@@ -3,7 +3,8 @@ import { fetchLeagueData } from "@/services/sports.api"
 import { Grid, GridItem } from "@chakra-ui/react"
 import { BarList, type BarListData, useChart } from "@chakra-ui/charts"
 import { Box, Image, Heading, HStack, Skeleton, SkeletonCircle, Stack } from "@chakra-ui/react"
-import { BarSegment } from "@chakra-ui/charts"
+import { BarSegment, type BarSegmentData } from "@chakra-ui/charts"
+import { useLanguage } from "@/i18n/languageContext"
 
 // Definimos los tipos para la información de la liga
 interface TeamInfo {
@@ -21,6 +22,8 @@ type Season = "2020-2021" | "2021-2022" | "2022-2023" | "2023-2024";
 type LeagueId = "4328" | "4332" | "4331"; // Agrega más IDs de ligas si es necesario
 
 export const StatsDemo = () => {
+  const { t } = useLanguage();
+  const s = t.demos.stats;
   // Estados con tipos definidos
   const [selectedSeason, setSelectedSeason] = useState<Season>('2023-2024');
   const [selectedLeague, setSelectedLeague] = useState<LeagueId>('4328');
@@ -35,23 +38,23 @@ export const StatsDemo = () => {
     { id: "4331", name: "Bundesliga" },
   ];
 
-  // Función para obtener los datos de la liga
-  const getLeagueInfo = async (season: string) => {
-    setLoading(true); // Comienza el estado de carga
-    try {
-      const data = await fetchLeagueData(season, selectedLeague);
-      setLeagueInfo(data?.table || []);
-    } catch (error) {
-      setError("Error al cargar los datos");
-    } finally {
-      setLoading(false); // Finaliza el estado de carga
-    }
-  };
-
   // useEffect para actualizar los datos cuando cambian la temporada o la liga
   useEffect(() => {
+    // Función para obtener los datos de la liga
+    const getLeagueInfo = async (season: string) => {
+      setLoading(true); // Comienza el estado de carga
+      try {
+        const data = await fetchLeagueData(season, selectedLeague);
+        setLeagueInfo(data?.table || []);
+      } catch {
+        setError(s.error);
+      } finally {
+        setLoading(false); // Finaliza el estado de carga
+      }
+    };
+
     getLeagueInfo(selectedSeason);
-  }, [selectedSeason, selectedLeague]);
+  }, [selectedSeason, selectedLeague, s]);
 
   // Configuración del gráfico de barras
   const barChart = useChart<BarListData>({
@@ -64,14 +67,14 @@ export const StatsDemo = () => {
   });
 
   // Configuración de los segmentos de barras
-  const barSegment = useChart({
+  const barSegment = useChart<BarSegmentData>({
     sort: { by: "value", direction: "desc" },
     data: leagueInfo[0]
       ? [
-        { name: "PJ", value: leagueInfo[0].intPlayed, color: "blue.solid" },
-        { name: "V", value: leagueInfo[0].intWin, color: "green.solid" },
-        { name: "E", value: leagueInfo[0].intDraw, color: "#ddd763" },
-        { name: "D", value: leagueInfo[0].intLoss, color: "red.solid" },
+        { name: s.labels.played, value: leagueInfo[0].intPlayed, color: "blue.solid" },
+        { name: s.labels.win, value: leagueInfo[0].intWin, color: "green.solid" },
+        { name: s.labels.draw, value: leagueInfo[0].intDraw, color: "#ddd763" },
+        { name: s.labels.loss, value: leagueInfo[0].intLoss, color: "red.solid" },
       ]
       : [],
   });
@@ -83,7 +86,7 @@ export const StatsDemo = () => {
         <GridItem>
           <div style={{ padding: "20px" }}>
             <label htmlFor="league-select" style={{ marginRight: "10px" }}>
-              Liga:
+              {s.league}
             </label>
             <select
               id="league-select"
@@ -110,7 +113,7 @@ export const StatsDemo = () => {
         {/* Selección de Temporada */}
         <GridItem>
           <div style={{ padding: "20px" }}>
-            <label htmlFor="season-select">Temporada:</label>
+            <label htmlFor="season-select">{s.season}</label>
             <select
               id="season-select"
               value={selectedSeason}
@@ -144,7 +147,7 @@ export const StatsDemo = () => {
           </Stack>
         </HStack>
       ) : leagueInfo.length === 0 ? (
-        <p>No hay datos disponibles</p>
+        <p>{s.empty}</p>
       ) : (
         <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }} gap={4}>
           {/* Gráfico de barras */}
@@ -161,7 +164,7 @@ export const StatsDemo = () => {
           <GridItem bg="#1f3e5c" p={2} borderRadius={3}>
             <Box display="flex" flexDirection="column" alignItems="center">
               <Heading size="md" mb={2}>
-                CAMPEÓN DE LIGA
+                {s.champion}
               </Heading>
               <Image rounded="md" src={leagueInfo[0]?.strBadge} alt="Escudo de la liga" />
             </Box>

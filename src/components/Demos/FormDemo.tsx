@@ -9,17 +9,21 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
-
-// Esquema de validación con Yup
-const schema = yup.object().shape({
-  nombre: yup.string().required("El nombre es obligatorio"),
-  apellido: yup.string().required("El apellido es obligatorio"),
-  correo: yup.string().email("El correo debe ser válido").required("El correo es obligatorio"),
-  contraseña: yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es obligatoria"),
-  telefono: yup.string().matches(/^[0-9]+$/, "El número de teléfono debe contener solo números").required("El número de teléfono es obligatorio"),
-});
+import { useLanguage } from "@/i18n/languageContext";
 
 export const FormDemo = () => {
+  const { t } = useLanguage();
+  const f = t.demos.form;
+
+  // Esquema de validación con Yup (se construye por render para traducir mensajes)
+  const schema = yup.object().shape({
+    nombre: yup.string().required(f.errors.name),
+    apellido: yup.string().required(f.errors.lastName),
+    correo: yup.string().email(f.errors.emailInvalid).required(f.errors.email),
+    contraseña: yup.string().min(6, f.errors.passwordMin).required(f.errors.password),
+    telefono: yup.string().matches(/^[0-9]+$/, f.errors.phoneDigits).required(f.errors.phone),
+  });
+
   type User = {
     id: number;
     nombre: string;
@@ -38,11 +42,13 @@ export const FormDemo = () => {
     telefono: ''
   };
 
-  const { control, handleSubmit, formState: { errors }, reset } = useForm({
+  type FormValues = yup.InferType<typeof schema>;
+
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FormValues) => {
     console.log("Datos enviados:", data);
 
     // Hacer una copia de los datos antes de que se reinicie el formulario
@@ -60,55 +66,55 @@ export const FormDemo = () => {
           <Fieldset.Content>
             {/* Nombre */}
             <Field.Root invalid={!!errors.nombre}>
-              <Field.Label>Nombre</Field.Label>
+              <Field.Label>{f.name}</Field.Label>
               <Controller
                 name="nombre"
                 control={control}
-                render={({ field }) => <Input {...field} placeholder="Ingresa tu nombre" />}
+                render={({ field }) => <Input {...field} placeholder={f.placeholders.name} />}
               />
               <p style={{ color: "red" }}>{errors.nombre?.message}</p>
             </Field.Root>
 
             {/* Apellido */}
             <Field.Root invalid={!!errors.apellido}>
-              <Field.Label>Apellido</Field.Label>
+              <Field.Label>{f.lastName}</Field.Label>
               <Controller
                 name="apellido"
                 control={control}
-                render={({ field }) => <Input {...field} placeholder="Ingresa tu apellido" />}
+                render={({ field }) => <Input {...field} placeholder={f.placeholders.lastName} />}
               />
               <p style={{ color: "red" }}>{errors.apellido?.message}</p>
             </Field.Root>
 
             {/* Correo */}
             <Field.Root invalid={!!errors.correo}>
-              <Field.Label>Correo Electrónico</Field.Label>
+              <Field.Label>{f.email}</Field.Label>
               <Controller
                 name="correo"
                 control={control}
-                render={({ field }) => <Input {...field} type="email" placeholder="Ingresa tu correo electrónico" />}
+                render={({ field }) => <Input {...field} type="email" placeholder={f.placeholders.email} />}
               />
               <p style={{ color: "red" }}>{errors.correo?.message}</p>
             </Field.Root>
 
             {/* Contraseña */}
             <Field.Root invalid={!!errors.contraseña}>
-              <Field.Label>Contraseña</Field.Label>
+              <Field.Label>{f.password}</Field.Label>
               <Controller
                 name="contraseña"
                 control={control}
-                render={({ field }) => <Input {...field} type="password" placeholder="Ingresa tu contraseña" />}
+                render={({ field }) => <Input {...field} type="password" placeholder={f.placeholders.password} />}
               />
               <p style={{ color: "red" }}>{errors.contraseña?.message}</p>
             </Field.Root>
 
             {/* Teléfono */}
             <Field.Root invalid={!!errors.telefono}>
-              <Field.Label>Teléfono</Field.Label>
+              <Field.Label>{f.phone}</Field.Label>
               <Controller
                 name="telefono"
                 control={control}
-                render={({ field }) => <Input {...field} type="tel" placeholder="Ingresa tu número de teléfono" />}
+                render={({ field }) => <Input {...field} type="tel" placeholder={f.placeholders.phone} />}
               />
               <p style={{ color: "red" }}>{errors.telefono?.message}</p>
             </Field.Root>
@@ -117,13 +123,13 @@ export const FormDemo = () => {
           {/* Mensaje de error general */}
           {Object.keys(errors).length > 0 && (
             <Fieldset.ErrorText>
-              Algunos campos son inválidos. Por favor, verifica la información.
+              {f.errors.general}
             </Fieldset.ErrorText>
           )}
 
           {/* Botón de envío */}
           <Button type="submit" colorScheme="blue" mt={4}>
-            Registrarse
+            {f.submit}
           </Button>
         </Fieldset.Root>
       </form>
@@ -134,10 +140,10 @@ export const FormDemo = () => {
           <Table.Root size="md" mt={2}>
             <Table.Header>
               <Table.Row>
-                <Table.ColumnHeader>Nombre</Table.ColumnHeader>
-                <Table.ColumnHeader>Apellido</Table.ColumnHeader>
-                <Table.ColumnHeader>Correo Electrónico</Table.ColumnHeader>
-                <Table.ColumnHeader>Teléfono</Table.ColumnHeader>
+                <Table.ColumnHeader>{f.name}</Table.ColumnHeader>
+                <Table.ColumnHeader>{f.lastName}</Table.ColumnHeader>
+                <Table.ColumnHeader>{f.email}</Table.ColumnHeader>
+                <Table.ColumnHeader>{f.phone}</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
             <Table.Body>

@@ -1,14 +1,26 @@
 import axios from "axios";
 
-const API_URL = `https://api.allorigins.win/get?url=${encodeURIComponent("https://api.argentinadatos.com/v1/feriados/2025")}`;
+const DIRECT_URL = `https://api.argentinadatos.com/v1/feriados/${new Date().getFullYear()}`;
+const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(DIRECT_URL)}`;
 
-export const fetchFeriados = async (): Promise<any> => {
+interface Feriado {
+  nombre: string;
+  fecha: string;
+}
+
+export const fetchFeriados = async (): Promise<Feriado[]> => {
   try {
-    const response = await axios.get(API_URL);
-    const jsonData = JSON.parse(response.data.contents); // Extrae los datos reales desde el proxy
-    return jsonData;
-  } catch (error) {
-    console.error("Error al hacer la solicitud:", error);
-    throw new Error("No se pudieron cargar los datos de feriados");
+    // Intento directo primero (la API soporta CORS)
+    const response = await axios.get(DIRECT_URL);
+    return response.data;
+  } catch {
+    try {
+      // Fallback vía proxy si el directo falla
+      const response = await axios.get(PROXY_URL);
+      return JSON.parse(response.data.contents);
+    } catch (error) {
+      console.error("Error al hacer la solicitud:", error);
+      throw new Error("No se pudieron cargar los datos de feriados");
+    }
   }
 };
