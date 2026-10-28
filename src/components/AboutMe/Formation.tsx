@@ -1,4 +1,4 @@
-import { Card, Heading, Tabs } from "@chakra-ui/react";
+import { Card, Heading, Tabs, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { MdOutlineWorkOutline } from "react-icons/md";
 import { VscTools } from "react-icons/vsc";
@@ -9,6 +9,7 @@ import { LuNotebookPen } from "react-icons/lu";
 import { BsPhone } from "react-icons/bs";
 import { Contact } from "./Contact";
 import { useLanguage } from "@/i18n/languageContext";
+import { GlitchText } from "@/components/GlitchText";
 
 export const Formation = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -34,8 +35,9 @@ export const Formation = () => {
         }}
       >
         <Card.Header>
+          <Text className="kicker" mb={1}>{"// 02"}</Text>
           <Heading className="subtitle" size="md">
-            {t.formation.title}
+            <GlitchText text={t.formation.title} />
           </Heading>
         </Card.Header>
         <Card.Body color="fg.muted">

@@ -7,10 +7,16 @@ export const translations = {
       projects: "Proyectos",
       demos: "Demos",
     },
+    a11y: {
+      skipToContent: "Saltar al contenido",
+    },
     hero: {
+      kicker: "// Desarrollador Full Stack · Jujuy, AR",
       greeting: "HOLA, SOY MAURICIO RIOS.",
-      role1: "Software developer.",
-      role2: "Analista Programador.",
+      value: "Construyo interfaces web rápidas y accesibles con React y TypeScript, y las conecto de punta a punta con Node.js.",
+      availability: "Disponible para nuevos proyectos",
+      ctaProjects: "Ver proyectos",
+      ctaCv: "Descargar CV",
       scroll: "Ver más",
     },
     about: {
@@ -32,8 +38,8 @@ export const translations = {
         title: "YagLab — julit",
         period: "en curso",
         points: [
-          "Colaboración en el desarrollo de julit, plataforma B2B de pagos con stablecoins (USDC) sobre la red Solana.",
-          "Integración de flujos de pago y experiencia de usuario del producto, utilizando Next.js y herramientas Web3.",
+          "Colaboración en el desarrollo de julit, plataforma B2B de pagos con stablecoins (USDC).",
+          "Integración de la aplicación con la blockchain de Solana.",
         ],
       },
       {
@@ -69,7 +75,14 @@ export const translations = {
     projects: {
       title: "Proyectos",
       subtitle: "Algunos trabajos y colaboraciones en los que participé",
+      repoLabel: "Ver en GitHub",
+      liveLabel: "Ver sitio en vivo",
       cards: [
+        {
+          title: "Pomoplane.",
+          body: "App de estudio estilo pomodoro con metáfora de vuelo: cada bloque de foco avanza un avión sobre un globo 3D hacia el destino elegido, y al arribar el pasaporte queda sellado. PWA instalable que funciona offline, con timers que sobreviven recargas y sincronización entre dispositivos mediante Supabase y login con Google.",
+          footer: "Proyecto personal — diseño y desarrollo",
+        },
         {
           title: "Mapa de herramientas.",
           body: "Desarrollé un mapa de herramientas para el alta y baja de marcadores personalizados utilizando la API oficial de Google maps, renderizando los mismos de acuerdo a la zona mostrada en pantalla. Se gestionaron los estados de las herramientas activas con Redux toolkit.",
@@ -92,7 +105,7 @@ export const translations = {
         },
         {
           title: "julit — Pagos B2B con USDC.",
-          body: "Colaboro en el desarrollo de julit, una plataforma B2B de pagos con stablecoins sobre la red Solana, dentro de la organización YagLab. Trabajo en la integración de flujos de pago, escrow y la experiencia de usuario del producto.",
+          body: "Colaboro en el desarrollo de julit, una plataforma B2B de pagos con stablecoins (USDC), dentro de la organización YagLab. Trabajo en la integración de la aplicación con la blockchain de Solana.",
           footer: "Rol: Full Stack / Web3 developer (proyecto en curso)",
         },
         {
@@ -163,7 +176,7 @@ export const translations = {
         help: "comandos:  whoami · skills · projects · experience · contact · clear",
         whoami: "Mauricio Ríos — Software developer / Analista Programador Universitario.\nJujuy, Argentina.",
         skills: "TypeScript · React · Next.js · Angular · Node.js\nMySQL · PostgreSQL · MongoDB · Solana · Web3 · Supabase",
-        projects: "julit (pagos B2B con USDC sobre Solana)\nagenda de turnos · dashboard de costos · check-in hotel · mapa de herramientas",
+        projects: "julit (pagos B2B con USDC — integración con Solana)\npomoplane · agenda de turnos · dashboard de costos · check-in hotel · mapa de herramientas",
         experience: "YagLab — julit (en curso)\nMinisterio Público de la Acusación\nFreelance\nFacultad de Ciencias Económicas (asistente)",
         contact: "riosmaurii@gmail.com\ngithub.com/RiosMauricio\nlinkedin.com/in/rios-mauricio-4504532b9",
         unknown: (cmd: string) => `comando no encontrado: "${cmd}". Probá 'help'.`,
@@ -172,6 +185,8 @@ export const translations = {
     footer: {
       role: "Analista Programador Universitario",
       location: "Jujuy, Argentina",
+      builtWith: "Hecho con React · Vite · Chakra UI",
+      backToTop: "Volver arriba",
     },
     notFound: {
       text: "Esta página no existe — como esos bugs que solo pasan en producción.",
@@ -184,10 +199,16 @@ export const translations = {
       projects: "Projects",
       demos: "Demos",
     },
+    a11y: {
+      skipToContent: "Skip to content",
+    },
     hero: {
+      kicker: "// Full Stack Developer · Jujuy, AR",
       greeting: "HI, I'M MAURICIO RIOS.",
-      role1: "Software developer.",
-      role2: "Programming Analyst.",
+      value: "I build fast, accessible web interfaces with React and TypeScript, and wire them end to end with Node.js.",
+      availability: "Open to new opportunities",
+      ctaProjects: "View projects",
+      ctaCv: "Download CV (ES)",
       scroll: "See more",
     },
     about: {
@@ -209,8 +230,8 @@ export const translations = {
         title: "YagLab — julit",
         period: "ongoing",
         points: [
-          "Contributor to julit, a B2B stablecoin payments platform (USDC) built on the Solana network.",
-          "Integration of payment flows and product UX, using Next.js and Web3 tooling.",
+          "Contributor to julit, a B2B stablecoin (USDC) payments platform.",
+          "Integration of the app with the Solana blockchain.",
         ],
       },
       {
@@ -246,7 +267,14 @@ export const translations = {
     projects: {
       title: "Projects",
       subtitle: "Selected work and collaborations",
+      repoLabel: "View on GitHub",
+      liveLabel: "Visit live site",
       cards: [
+        {
+          title: "Pomoplane.",
+          body: "Pomodoro-style study app with a flight metaphor: each focus block moves a plane across a 3D globe toward the chosen destination, and arriving stamps your passport. Installable offline PWA with timers that survive reloads and cross-device sync via Supabase and Google login.",
+          footer: "Personal project — design and development",
+        },
         {
           title: "Tool map.",
           body: "Built a custom marker management map using the official Google Maps API, rendering markers based on the area visible on screen. Active tool state managed with Redux Toolkit.",
@@ -269,7 +297,7 @@ export const translations = {
         },
         {
           title: "julit — B2B USDC payments.",
-          body: "I collaborate on julit, a B2B stablecoin payments platform on the Solana network, at the YagLab organization. I work on payment and escrow flows plus product UX.",
+          body: "I collaborate on julit, a B2B stablecoin (USDC) payments platform, at the YagLab organization. I work on integrating the app with the Solana blockchain.",
           footer: "Role: Full stack / Web3 developer (ongoing)",
         },
         {
@@ -340,7 +368,7 @@ export const translations = {
         help: "commands:  whoami · skills · projects · experience · contact · clear",
         whoami: "Mauricio Ríos — Software developer / University Programming Analyst.\nJujuy, Argentina.",
         skills: "TypeScript · React · Next.js · Angular · Node.js\nMySQL · PostgreSQL · MongoDB · Solana · Web3 · Supabase",
-        projects: "julit (B2B payments with USDC on Solana)\nappointment scheduler · cost dashboard · hotel check-in · tool map",
+        projects: "julit (B2B USDC payments — Solana integration)\npomoplane · appointment scheduler · cost dashboard · hotel check-in · tool map",
         experience: "YagLab — julit (ongoing)\nPublic Prosecutor's Office\nFreelance\nFaculty of Economic Sciences (assistant)",
         contact: "riosmaurii@gmail.com\ngithub.com/RiosMauricio\nlinkedin.com/in/rios-mauricio-4504532b9",
         unknown: (cmd: string) => `command not found: "${cmd}". Try 'help'.`,
@@ -349,6 +377,8 @@ export const translations = {
     footer: {
       role: "University Programming Analyst",
       location: "Jujuy, Argentina",
+      builtWith: "Built with React · Vite · Chakra UI",
+      backToTop: "Back to top",
     },
     notFound: {
       text: "This page doesn't exist — like those bugs that only happen in production.",

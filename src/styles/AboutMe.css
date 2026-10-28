@@ -4,6 +4,7 @@
 .titleName {
   font-family: 'PT Serif', serif;
   font-weight: 700;
+  overflow-wrap: break-word;
 }
 
 .subtitle {
@@ -14,6 +15,254 @@
 .paragraph {
   font-family: 'Quicksand';
   font-weight: 500;
+}
+
+/* Apellido del hero con gradiente al acento: se aplica por palabra y no
+   por heading, asi el coloreado es identico con o sin salto de linea. */
+.hero-surname {
+  background: linear-gradient(105deg, var(--accent-strong), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 480px) {
+  .hero-name {
+    font-size: clamp(24px, 8.5vw, 32px);
+  }
+}
+
+.hero-value {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+@media (min-width: 768px) {
+  .hero-value {
+    font-size: 18px;
+  }
+}
+
+/* CTAs del hero: primario relleno + secundario con borde */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease-out), background 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+}
+
+.cta-primary {
+  background: var(--accent);
+  color: #12151c;
+}
+
+.cta-primary:hover {
+  background: var(--accent-strong);
+}
+
+.cta-outline {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+}
+
+.cta-outline:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+}
+
+/* ---------- Avatar pixel-art del hero ----------
+   El sprite (SVG crispEdges 56x56) vive dentro del circulo navy con el mismo
+   anillo/glow de siempre; las pupilas se mueven via .pa-pupils[transform],
+   el parpadeo es .pa-blink en el wrapper y la "respiracion" un bob de 1px
+   en steps(). Las copias .pa-copy (cyan/magenta monocromas y semitransparentes)
+   solo aparecen en la rafaga .is-glitching o :hover, desplazadas 1-3px de
+   arte en franjas horizontales finas: la base siempre queda legible. */
+.pixel-avatar {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(99, 179, 237, 0.12), transparent 62%),
+    #0c1731;
+}
+
+.pixel-avatar .pa-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pa-bob {
+  animation: pa-bob 1.2s steps(1, end) infinite;
+}
+
+@keyframes pa-bob {
+  0%, 72% {
+    transform: translateY(0);
+  }
+  82%, 96% {
+    transform: translateY(1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.pa-eyes-closed {
+  visibility: hidden;
+}
+
+.pa-svg.pa-blink .pa-eyes-closed {
+  visibility: visible;
+}
+
+.pa-svg.pa-blink .pa-pupils {
+  visibility: hidden;
+}
+
+.pa-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pa-copy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pixel-avatar.is-glitching .pa-copy-a {
+  animation: pa-glitch-a 320ms steps(1, end) both;
+}
+
+.pixel-avatar.is-glitching .pa-copy-b {
+  animation: pa-glitch-b 320ms steps(1, end) both;
+}
+
+@media (hover: hover) {
+  .pixel-avatar:hover .pa-copy-a {
+    animation: pa-glitch-a 320ms steps(1, end) both;
+  }
+
+  .pixel-avatar:hover .pa-copy-b {
+    animation: pa-glitch-b 320ms steps(1, end) both;
+  }
+}
+
+/* Mismo split RGB del glitch del nombre, pero con offsets en %: 1px de arte
+   = 100/56 % del viewBox, asi el desplazamiento es el correcto a cualquier
+   {size}. Copias semitransparentes en franjas finas, base siempre visible. */
+@keyframes pa-glitch-a {
+  0% {
+    opacity: 0.65;
+    transform: translateX(-3.6%);
+    clip-path: inset(8% 0 82% 0);
+  }
+  20% {
+    opacity: 0.6;
+    transform: translateX(1.8%);
+    clip-path: inset(58% 0 30% 0);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateX(-5.4%);
+    clip-path: inset(32% 0 58% 0);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateX(3.6%);
+    clip-path: inset(72% 0 16% 0);
+  }
+  80% {
+    opacity: 0.65;
+    transform: translateX(-1.8%);
+    clip-path: inset(16% 0 74% 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+    clip-path: inset(45% 0 45% 0);
+  }
+}
+
+@keyframes pa-glitch-b {
+  0% {
+    opacity: 0.65;
+    transform: translateX(3.6%);
+    clip-path: inset(66% 0 20% 0);
+  }
+  20% {
+    opacity: 0.6;
+    transform: translateX(-1.8%);
+    clip-path: inset(22% 0 68% 0);
+  }
+  40% {
+    opacity: 0.7;
+    transform: translateX(5.4%);
+    clip-path: inset(48% 0 40% 0);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateX(-5.4%);
+    clip-path: inset(12% 0 78% 0);
+  }
+  80% {
+    opacity: 0.65;
+    transform: translateX(1.8%);
+    clip-path: inset(62% 0 26% 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0);
+    clip-path: inset(50% 0 50% 0);
+  }
+}
+
+/* Scanlines CRT suaves dentro del aro, igual que el fondo del sitio. */
+.pa-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pa-bob {
+    animation: none;
+  }
+
+  .pa-eyes-closed {
+    visibility: hidden !important;
+  }
+
+  .pa-copy {
+    display: none;
+  }
 }
 
 .readMore {

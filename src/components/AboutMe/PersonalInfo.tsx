@@ -1,6 +1,8 @@
 import { Card } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
+import { Text } from "@chakra-ui/react"
 import { useLanguage } from "@/i18n/languageContext"
+import { GlitchText } from "@/components/GlitchText"
 import "@/styles/AboutMe.css"
 
 export const PersonalInfo = () => {
@@ -17,7 +19,8 @@ export const PersonalInfo = () => {
         }}
       >
         <Card.Header>
-          <Heading className="subtitle" size={'md'}>{t.about.title}</Heading>
+          <Text className="kicker" mb={1}>{"// 01"}</Text>
+          <Heading className="subtitle" size={'md'}><GlitchText text={t.about.title} /></Heading>
         </Card.Header>
         <Card.Body color="fg.muted">
           <p className="paragraph">
