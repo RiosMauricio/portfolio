@@ -11,6 +11,9 @@ import { useLanguage } from "@/i18n/languageContext";
 
 const BOOT_FLAG = "mrdemos.booted";
 const SWITCH_MS = 240;
+// El contenido del tubo monta cuando el flash de encendido está
+// decayendo (la coreografía de entrada vive en Monitor.css).
+const POWER_ON_MS = 740;
 
 const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
@@ -29,12 +32,22 @@ export const Demos = () => {
   });
   const [mode, setMode] = useState<string | null>(null);
   const [switching, setSwitching] = useState(false);
+  const [tubeOn, setTubeOn] = useState(() => prefersReducedMotion());
   const switchTimer = useRef<number | undefined>(undefined);
+  const introTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+    introTimer.current = window.setTimeout(() => {
+      introTimer.current = undefined;
+      setTubeOn(true);
+    }, POWER_ON_MS);
     return () => {
       if (switchTimer.current !== undefined) {
         window.clearTimeout(switchTimer.current);
+      }
+      if (introTimer.current !== undefined) {
+        window.clearTimeout(introTimer.current);
       }
     };
   }, []);
@@ -46,6 +59,15 @@ export const Demos = () => {
       /* modo privado: se muestra el boot en cada visita */
     }
     setPhase("ready");
+  }, []);
+
+  // Saltea el encendido del tubo y muestra el contenido ya.
+  const completeIntro = useCallback(() => {
+    if (introTimer.current !== undefined) {
+      window.clearTimeout(introTimer.current);
+      introTimer.current = undefined;
+    }
+    setTubeOn(true);
   }, []);
 
   // Cambio de canal: estática breve y recién ahí se monta el destino.
@@ -80,10 +102,12 @@ export const Demos = () => {
     { mode: "terminal", num: "04", color: "#4ade80", icon: <FaTerminal />, label: t.demos.dock.terminal },
   ];
 
-  // Durante el boot un botón sirve de skip y abre el canal directo.
+  // Durante el boot o la intro un botón sirve de skip: completa la
+  // entrada y abre el canal directo.
   const pressChannel = (target: string) => {
-    if (phase === "boot") {
-      finishBoot();
+    if (phase === "boot" || !tubeOn) {
+      if (phase === "boot") finishBoot();
+      completeIntro();
       setMode(target);
       return;
     }
@@ -110,8 +134,9 @@ export const Demos = () => {
                 bg, border) a los valores oscuros dentro del tubo. */}
             <div className="mcrt-screen dark">
               <div className="mcrt-grid" aria-hidden="true" />
+              <div className="mcrt-powerline" aria-hidden="true" />
 
-              {phase === "boot" ? (
+              {!tubeOn ? null : phase === "boot" ? (
                 <CrtBoot onDone={finishBoot} />
               ) : (
                 !switching &&
@@ -145,11 +170,11 @@ export const Demos = () => {
 
           <div className="mcrt-deck">
             <nav className="dock" aria-label={t.nav.demos}>
-              {dockApps.map((app) => (
+              {dockApps.map((app, i) => (
                 <div
                   className="arcade-btn-wrap"
                   key={app.mode}
-                  style={{ "--btn": app.color } as CSSProperties}
+                  style={{ "--btn": app.color, "--i": i } as CSSProperties}
                 >
                   <button
                     className={`arcade-btn${mode === app.mode ? " is-active" : ""}`}

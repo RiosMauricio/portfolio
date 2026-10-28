@@ -1,7 +1,14 @@
 /* ============ Monitor CRT / arcade ============
    Carcasa de plástico oscuro con pantalla empotrada. Las scanlines y el
    glow viven solo en el bisel y en los bordes del tubo: el contenido
-   interactivo queda limpio y los overlays son pointer-events: none. */
+   interactivo queda limpio y los overlays son pointer-events: none.
+
+   Intro de entrada a /demos (corre en cada montaje, no solo la primera
+   visita): el gabinete sube, el tubo enciende con el flash clásico de
+   CRT, el LED parpadea y los botones caen en stagger. Todo son
+   animaciones "backwards" sobre estados naturales — no dejan transform
+   residual y con prefers-reduced-motion (animation:none global) cada
+   elemento queda directamente en su estado final. */
 
 .mcrt {
   width: min(1080px, 94vw);
@@ -17,6 +24,7 @@
   width: 100%;
   padding: 20px 20px 0;
   border-radius: 22px;
+  animation: mcrt-cab-in 460ms var(--ease-out) backwards;
   background: linear-gradient(180deg, #2e3340 0%, #22262f 34%, #181b22 78%, #14161c 100%);
   border: 1px solid rgba(255, 255, 255, 0.07);
   box-shadow:
@@ -120,6 +128,73 @@
     transparent 34%
   );
   pointer-events: none;
+}
+
+/* ---------- Intro de entrada ----------
+   0–460ms: gabinete sube y aparece; el pie acompaña con ~100ms de
+   delay. 380–800ms: el tubo enciende (línea que se expande + flash
+   de fósforo que decae). ~740ms: React monta el contenido (boot o
+   idle) con un settle de brillo. 560ms+: LED flicker; 600ms+:
+   botonera en stagger (ver Dock.css). */
+@keyframes mcrt-cab-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+}
+
+@keyframes mcrt-stand-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* Destello del tubo al encender: nace como línea horizontal fina
+   ~380ms tras el montaje, se expande vertical y decae. El fill
+   "both" la deja invisible antes del delay y después del flash;
+   con animation:none queda en opacity:0 natural. */
+.mcrt-powerline {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0;
+  background: radial-gradient(60% 100% at 50% 50%, rgba(190, 230, 255, 0.95), rgba(99, 179, 237, 0.5) 55%, transparent 100%);
+  animation: mcrt-power-on 420ms ease-out 380ms both;
+  pointer-events: none;
+}
+
+@keyframes mcrt-power-on {
+  0% {
+    transform: scaleX(0.4) scaleY(0.004);
+    opacity: 0;
+  }
+  14% {
+    opacity: 1;
+  }
+  62% {
+    transform: scaleX(1) scaleY(1.04);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* El contenido del tubo (boot, idle o demo) aparece con un settle
+   de fósforo cada vez que se monta. */
+.mcrt-boot,
+.mcrt-idle,
+.mcrt-demo {
+  animation: mcrt-content-in 240ms ease-out;
+}
+
+@keyframes mcrt-content-in {
+  from {
+    opacity: 0;
+    filter: brightness(2.2) saturate(1.35);
+  }
 }
 
 /* ---------- Pantalla idle / attract mode ---------- */
@@ -272,30 +347,6 @@
   outline: none;
 }
 
-/* Destello del tubo al encender: línea que se expande y se apaga. */
-.mcrt-powerline {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(60% 100% at 50% 50%, rgba(190, 230, 255, 0.95), rgba(99, 179, 237, 0.5) 55%, transparent 100%);
-  animation: mcrt-power-on 0.34s ease-out both;
-  pointer-events: none;
-}
-
-@keyframes mcrt-power-on {
-  0% {
-    transform: scaleX(0.4) scaleY(0.004);
-    opacity: 1;
-  }
-  70% {
-    transform: scaleX(1) scaleY(1.02);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scaleX(1) scaleY(1);
-    opacity: 0;
-  }
-}
-
 .mcrt-boot-inner {
   width: min(80%, 460px);
   font-family: var(--font-mono);
@@ -393,10 +444,38 @@
   box-shadow:
     0 0 8px 2px rgba(74, 222, 128, 0.55),
     inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+  /* Encendido tipo tubo fluorescente: apagado hasta ~560ms,
+     flicker y queda fijo. */
+  animation: led-power-up 520ms ease-out 560ms backwards;
 }
 
+/* Primera visita: tras el flicker sigue parpadeando mientras corre
+   el boot de texto. */
 .mcrt-led.is-booting::before {
-  animation: led-blink 0.5s steps(2, start) infinite;
+  animation:
+    led-power-up 520ms ease-out 560ms backwards,
+    led-blink 0.5s steps(2, start) 1080ms infinite;
+}
+
+@keyframes led-power-up {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  34% {
+    opacity: 0.2;
+  }
+  58% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes led-blink {
@@ -412,6 +491,7 @@
   background: linear-gradient(180deg, #171a21, #10131a);
   clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
   box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+  animation: mcrt-stand-in 340ms var(--ease-out) 90ms backwards;
 }
 
 .mcrt-foot {
@@ -421,6 +501,7 @@
   background: linear-gradient(180deg, #1d212a, #12151c);
   border: 1px solid rgba(255, 255, 255, 0.05);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+  animation: mcrt-stand-in 340ms var(--ease-out) 110ms backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

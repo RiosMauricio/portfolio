@@ -57,7 +57,6 @@ export const CrtBoot = ({ onDone }: { onDone: () => void }) => {
         }
       }}
     >
-      <div className="mcrt-powerline" aria-hidden="true" />
       <div className="mcrt-boot-inner">
         {step >= 1 && (
           <>

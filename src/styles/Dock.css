@@ -1,7 +1,12 @@
 /* ============ Botonera arcade ============
    El dock se convierte en una hilera de botones arcade sobre la
    "barbilla" del monitor: cap redondo con brillo, collar oscuro y
-   estado presionado que se hunde 2px. --btn llega inline por canal. */
+   estado presionado que se hunde 2px. --btn llega inline por canal.
+
+   Al entrar a /demos los botones "caen" en stagger de 70ms con un
+   pequeño rebote y las etiquetas aparecen después. La animación va
+   sobre el wrap para no pisar el transform del propio botón
+   (:active/.is-active lo hunden 2px). --i llega inline por canal. */
 
 .dock {
   display: flex;
@@ -16,6 +21,25 @@
   flex-direction: column;
   align-items: center;
   gap: 7px;
+  animation: arcade-drop 340ms var(--ease-out) backwards;
+  animation-delay: calc(600ms + var(--i, 0) * 70ms);
+}
+
+@keyframes arcade-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+  78% {
+    transform: translateY(-1.5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .arcade-btn {
@@ -82,4 +106,13 @@
   color: color-mix(in srgb, var(--btn) 78%, #cfd8e8);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
+  animation: arcade-label-in 220ms ease-out backwards;
+  animation-delay: calc(740ms + var(--i, 0) * 70ms);
+}
+
+@keyframes arcade-label-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
