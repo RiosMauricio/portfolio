@@ -1,9 +1,10 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { Separator, Grid, GridItem, Box, Badge, Flex, Link, Icon } from "@chakra-ui/react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import ReactPlayer from "react-player";
 import { useInView } from "@/hooks/useInView";
 import { useLanguage } from "@/i18n/languageContext";
+import { CrtScreen } from "@/components/CrtScreen";
 
 interface ProjectCardData {
   videoUrl?: string;
@@ -17,10 +18,17 @@ interface ProjectCardData {
   playbackRate?: number;
 }
 
-const ProjectCard = ({ card, delay = 0 }: { card: ProjectCardData; delay?: number }) => {
+const ProjectCard = ({ card, channel, delay = 0 }: { card: ProjectCardData; channel: number; delay?: number }) => {
   const { ref, inView } = useInView<HTMLDivElement>(0.25);
   const { ref: revealRef, inView: revealed } = useInView<HTMLDivElement>(0.15, true);
+  const [powered, setPowered] = useState(false);
   const { t } = useLanguage();
+
+  // El power-on del CRT se dispara solo la primera vez que la card entra
+  // en viewport (aunque inView siga alternando para el autoplay).
+  useEffect(() => {
+    if (inView) setPowered(true);
+  }, [inView]);
 
   return (
     <GridItem
@@ -50,27 +58,29 @@ const ProjectCard = ({ card, delay = 0 }: { card: ProjectCardData; delay?: numbe
           bg="#0d0f14"
           boxShadow="inset 0 0 18px rgba(170, 200, 255, 0.28), 0 0 26px 2px rgba(215, 228, 255, 0.30)"
         >
-          {card.videoUrl ? (
-            <ReactPlayer
-              url={card.videoUrl}
-              width="100%"
-              height="100%"
-              playing={inView}
-              controls
-              loop
-              muted
-              playbackRate={card.playbackRate ?? 1.75}
-              config={{
-                file: { attributes: { style: { width: "100%", height: "100%", objectFit: "cover" } } },
-              }}
-            />
-          ) : (
-            <img
-              src={card.image}
-              alt={card.projectTitle}
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          )}
+          <CrtScreen channel={channel} powered={powered}>
+            {card.videoUrl ? (
+              <ReactPlayer
+                url={card.videoUrl}
+                width="100%"
+                height="100%"
+                playing={inView}
+                controls
+                loop
+                muted
+                playbackRate={card.playbackRate ?? 1.75}
+                config={{
+                  file: { attributes: { style: { width: "100%", height: "100%", objectFit: "cover" } } },
+                }}
+              />
+            ) : (
+              <img
+                src={card.image}
+                alt={card.projectTitle}
+                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              />
+            )}
+          </CrtScreen>
         </Box>
       </Box>
 
@@ -176,7 +186,7 @@ export const ProjectsList = () => {
       >
 
         {cards.map((card, index) => (
-          <ProjectCard key={index} card={card} delay={Math.min(index * 70, 350)} />
+          <ProjectCard key={index} card={card} channel={index + 1} delay={Math.min(index * 70, 350)} />
         ))}
       </Grid>
     </>

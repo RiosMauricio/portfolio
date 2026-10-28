@@ -10,8 +10,8 @@ export const Education = () => {
 
   return (
     <>
-      <Card.Root border={'transparent'}>
-        <Card.Body color="fg.muted">
+      <Card.Root border={'transparent'} bg="transparent" boxShadow="none">
+        <Card.Body color="gray.300">
           {t.education.map((item, index) => {
             const alignEnd = index % 2 === 1;
             return (

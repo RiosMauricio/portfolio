@@ -1,17 +1,487 @@
-.screen-shadow {
-  -webkit-box-shadow: 0px 0px 26px 5px rgba(231, 229, 232, 0.96);
-  -moz-box-shadow: 0px 0px 26px 5px rgba(231, 229, 232, 0.96);
-  box-shadow: 0px 0px 26px 5px rgba(231, 229, 232, 0.96);
+/* ============ Monitor CRT / arcade ============
+   Carcasa de plástico oscuro con pantalla empotrada. Las scanlines y el
+   glow viven solo en el bisel y en los bordes del tubo: el contenido
+   interactivo queda limpio y los overlays son pointer-events: none. */
+
+.mcrt {
+  width: min(1080px, 94vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 34px 60px rgba(0, 0, 0, 0.6));
 }
 
-.monitor-shadow {
-  -webkit-box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
-  -moz-box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
-  box-shadow: 13px -8px 3px 5px rgb(30, 56, 80);
+.mcrt-body {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 20px 20px 0;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #2e3340 0%, #22262f 34%, #181b22 78%, #14161c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.5),
+    0 0 70px rgba(99, 179, 237, 0.06);
 }
 
-.feet-shadow {
-  -webkit-box-shadow: 10px 10px 5px 0px rgba(26,26,26,1);
-  -moz-box-shadow: 10px 10px 5px 0px rgba(26,26,26,1);
-  box-shadow: 10px 10px 5px 0px rgba(26,26,26,1);
+/* Scanlines del sitio como textura del plástico (la pantalla las tapa). */
+.mcrt-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.028) 0,
+    rgba(255, 255, 255, 0.028) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+}
+
+/* Bisel interno que empotra el tubo. */
+.mcrt-screen-bezel {
+  position: relative;
+  z-index: 1;
+  padding: 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b0d13, #070910);
+  box-shadow:
+    inset 0 2px 12px rgba(0, 0, 0, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.mcrt-screen {
+  position: relative;
+  height: clamp(320px, 56vh, 560px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 30%, #0c1426 0%, #060a15 60%, #04060c 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    inset 0 0 46px rgba(99, 179, 237, 0.07);
+}
+
+/* Punto-grid tenue, eco del fondo del sitio. */
+.mcrt-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 78% 70% at 50% 42%, black 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 78% 70% at 50% 42%, black 30%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Viñeta de curvatura: solo oscurece los bordes del tubo. */
+.mcrt-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: radial-gradient(
+    ellipse 118% 104% at 50% 46%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.3) 92%,
+    rgba(0, 0, 0, 0.48) 100%
+  );
+  pointer-events: none;
+}
+
+/* Scanlines confinadas a los bordes por máscara radial. */
+.mcrt-scan-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(180, 220, 255, 0.055) 0,
+    rgba(180, 220, 255, 0.055) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  -webkit-mask-image: radial-gradient(ellipse 90% 86% at 50% 50%, transparent 58%, black 96%);
+  mask-image: radial-gradient(ellipse 90% 86% at 50% 50%, transparent 58%, black 96%);
+  pointer-events: none;
+}
+
+/* Brillo de vidrio en la esquina superior. */
+.mcrt-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.018) 18%,
+    transparent 34%
+  );
+  pointer-events: none;
+}
+
+/* ---------- Pantalla idle / attract mode ---------- */
+.mcrt-idle {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+.mcrt-idle-brand {
+  font-family: var(--font-pixel);
+  font-size: clamp(15px, 2.6vw, 24px);
+  letter-spacing: 0.14em;
+  color: var(--accent-strong);
+  text-shadow: 0 0 14px rgba(99, 179, 237, 0.55);
+}
+
+.mcrt-idle-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.6vw, 13.5px);
+  color: rgba(214, 226, 240, 0.75);
+}
+
+.mcrt-idle-hint {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 1.5vw, 12px);
+  color: rgba(160, 174, 192, 0.85);
+}
+
+/* ---------- Demo dentro de la pantalla ---------- */
+.mcrt-demo {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(140, 160, 190, 0.35) transparent;
+  /* Los componentes Chakra leen fg directo; los elementos nativos
+     (label, p, select) heredan este color resuelto en el scope .dark. */
+  color: var(--chakra-colors-fg, #e8eef7);
+  color-scheme: dark;
+}
+
+.mcrt-demo::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mcrt-demo::-webkit-scrollbar-thumb {
+  background: rgba(140, 160, 190, 0.3);
+  border-radius: 4px;
+}
+
+/* Los hijos flex/grid no heredan min-width:auto: sin esto el input del
+   terminal fuerza scroll horizontal y queda recortado en pantallas chicas. */
+.mcrt-demo * {
+  min-width: 0;
+}
+
+/* <select> nativo (StatsDemo): el UA los pinta claros por defecto y el
+   componente trae `border` inline, así que el borde necesita !important. */
+.mcrt-demo select {
+  background-color: #131a29;
+  color: #e6edf6;
+  border: 1px solid #3d4a63 !important;
+}
+
+.mcrt-demo select option {
+  background-color: #131a29;
+  color: #e6edf6;
+}
+
+/* ---------- Cambio de canal: flash de estática ---------- */
+.mcrt-static {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background-color: #0a0d14;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: mcrt-channel 0.24s steps(4, end) both;
+  pointer-events: none;
+}
+
+@keyframes mcrt-channel {
+  0% {
+    opacity: 1;
+    filter: brightness(2.6) contrast(1.4);
+    background-position: 0 0;
+  }
+  25% {
+    background-position: -37px 21px;
+  }
+  50% {
+    background-position: 52px -33px;
+    filter: brightness(1.2) contrast(1.1);
+  }
+  75% {
+    background-position: -18px -44px;
+  }
+  100% {
+    opacity: 0;
+    filter: brightness(1);
+    background-position: 0 0;
+  }
+}
+
+/* OSD tipo TV: etiqueta de canal que se desvanece sola. */
+.mcrt-osd {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 5;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(219, 236, 255, 0.92);
+  text-shadow: 0 0 8px rgba(99, 179, 237, 0.8), 0 1px 2px #000;
+  animation: mcrt-osd 1.6s ease-out both;
+  pointer-events: none;
+}
+
+@keyframes mcrt-osd {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  12% {
+    opacity: 1;
+    transform: none;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---------- Secuencia de arranque ---------- */
+.mcrt-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #03050a;
+  cursor: pointer;
+}
+
+.mcrt-boot:focus {
+  outline: none;
+}
+
+/* Destello del tubo al encender: línea que se expande y se apaga. */
+.mcrt-powerline {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 100% at 50% 50%, rgba(190, 230, 255, 0.95), rgba(99, 179, 237, 0.5) 55%, transparent 100%);
+  animation: mcrt-power-on 0.34s ease-out both;
+  pointer-events: none;
+}
+
+@keyframes mcrt-power-on {
+  0% {
+    transform: scaleX(0.4) scaleY(0.004);
+    opacity: 1;
+  }
+  70% {
+    transform: scaleX(1) scaleY(1.02);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+}
+
+.mcrt-boot-inner {
+  width: min(80%, 460px);
+  font-family: var(--font-mono);
+  font-size: clamp(10px, 2.4vw, 13px);
+  line-height: 2;
+  color: #69f0ae;
+  text-shadow: 0 0 8px rgba(105, 240, 174, 0.45);
+}
+
+.mcrt-boot-brand {
+  font-family: var(--font-pixel);
+  font-size: clamp(11px, 2.6vw, 14px);
+  letter-spacing: 0.14em;
+  color: var(--accent-strong);
+  text-shadow: 0 0 10px rgba(144, 205, 244, 0.5);
+}
+
+.mcrt-boot-dim {
+  color: rgba(105, 240, 174, 0.55);
+}
+
+.mcrt-boot-bar {
+  letter-spacing: 0.08em;
+  color: #9ff5c8;
+  white-space: nowrap;
+}
+
+.mcrt-boot-ready {
+  margin-top: 6px;
+  font-family: var(--font-pixel);
+  font-size: clamp(10px, 2.2vw, 12px);
+  letter-spacing: 0.18em;
+  color: #e6ffed;
+}
+
+.mcrt-boot-skip {
+  position: absolute;
+  right: 14px;
+  bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(160, 174, 192, 0.5);
+  pointer-events: none;
+}
+
+/* ---------- Deck de control ---------- */
+.mcrt-deck {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 14px 14px;
+}
+
+.mcrt-deck-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  order: 2;
+  padding: 0 4px;
+}
+
+.mcrt-brand {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #7c8496;
+  padding: 5px 12px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.7),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.mcrt-led {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: #6b7280;
+}
+
+.mcrt-led::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #4ade80;
+  box-shadow:
+    0 0 8px 2px rgba(74, 222, 128, 0.55),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.mcrt-led.is-booting::before {
+  animation: led-blink 0.5s steps(2, start) infinite;
+}
+
+@keyframes led-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ---------- Soporte ---------- */
+.mcrt-stand {
+  width: 200px;
+  height: 30px;
+  background: linear-gradient(180deg, #171a21, #10131a);
+  clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%);
+  box-shadow: inset 0 -6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.mcrt-foot {
+  width: 320px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #1d212a, #12151c);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* El OSD se apaga por animación; sin animación quedaría fijo para
+     siempre sobre el demo, así que se oculta directamente. */
+  .mcrt-osd {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .mcrt-body {
+    padding: 10px 10px 0;
+    border-radius: 16px;
+  }
+
+  .mcrt-screen-bezel {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .mcrt-screen {
+    height: clamp(300px, 52vh, 480px);
+    border-radius: 9px;
+  }
+
+  .mcrt-demo {
+    padding: 10px;
+  }
+
+  .mcrt-deck {
+    padding: 12px 8px 10px;
+    gap: 10px;
+  }
+
+  .mcrt-brand {
+    font-size: 8px;
+    padding: 4px 8px;
+    letter-spacing: 0.12em;
+  }
+
+  .mcrt-stand {
+    width: 130px;
+    height: 22px;
+  }
+
+  .mcrt-foot {
+    width: 210px;
+    height: 10px;
+  }
 }

@@ -72,7 +72,7 @@ export const FormDemo = () => {
                 control={control}
                 render={({ field }) => <Input {...field} placeholder={f.placeholders.name} />}
               />
-              <p style={{ color: "red" }}>{errors.nombre?.message}</p>
+              <p style={{ color: "#fc8181" }}>{errors.nombre?.message}</p>
             </Field.Root>
 
             {/* Apellido */}
@@ -83,7 +83,7 @@ export const FormDemo = () => {
                 control={control}
                 render={({ field }) => <Input {...field} placeholder={f.placeholders.lastName} />}
               />
-              <p style={{ color: "red" }}>{errors.apellido?.message}</p>
+              <p style={{ color: "#fc8181" }}>{errors.apellido?.message}</p>
             </Field.Root>
 
             {/* Correo */}
@@ -94,7 +94,7 @@ export const FormDemo = () => {
                 control={control}
                 render={({ field }) => <Input {...field} type="email" placeholder={f.placeholders.email} />}
               />
-              <p style={{ color: "red" }}>{errors.correo?.message}</p>
+              <p style={{ color: "#fc8181" }}>{errors.correo?.message}</p>
             </Field.Root>
 
             {/* Contraseña */}
@@ -105,7 +105,7 @@ export const FormDemo = () => {
                 control={control}
                 render={({ field }) => <Input {...field} type="password" placeholder={f.placeholders.password} />}
               />
-              <p style={{ color: "red" }}>{errors.contraseña?.message}</p>
+              <p style={{ color: "#fc8181" }}>{errors.contraseña?.message}</p>
             </Field.Root>
 
             {/* Teléfono */}
@@ -116,7 +116,7 @@ export const FormDemo = () => {
                 control={control}
                 render={({ field }) => <Input {...field} type="tel" placeholder={f.placeholders.phone} />}
               />
-              <p style={{ color: "red" }}>{errors.telefono?.message}</p>
+              <p style={{ color: "#fc8181" }}>{errors.telefono?.message}</p>
             </Field.Root>
           </Fieldset.Content>
 

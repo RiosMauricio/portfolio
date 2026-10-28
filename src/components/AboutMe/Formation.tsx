@@ -28,20 +28,19 @@ export const Formation = () => {
       <Card.Root
         size="sm"
         m={4}
-        transition="transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out"
-        _hover={{
-          transform: "scale(1.01)",
-          boxShadow: "0px 10px 20px rgba(255, 255, 255, 0.3)",
-        }}
+        className="px-card"
+        bg="transparent"
+        border="none"
+        boxShadow="none"
       >
         <Card.Header>
-          <Text className="kicker" mb={1}>{"// 02"}</Text>
-          <Heading className="subtitle" size="md">
+          <Text className="px-kicker" mb={1}>{"// 02"}</Text>
+          <Heading className="px-title" size="md">
             <GlitchText text={t.formation.title} />
           </Heading>
         </Card.Header>
-        <Card.Body color="fg.muted">
-          <Tabs.Root defaultValue="works">
+        <Card.Body color="gray.300">
+          <Tabs.Root defaultValue="works" className="arcade-tabs">
             <Tabs.List>
               <Tabs.Trigger value="works">
                 <MdOutlineWorkOutline />
@@ -60,16 +59,16 @@ export const Formation = () => {
                 {screenWidth > 767 && <>{t.formation.tabs.contact}</>}
               </Tabs.Trigger>
             </Tabs.List>
-            <Tabs.Content value="works">
+            <Tabs.Content value="works" className="px-card px-card--panel">
               <WorkExp />
             </Tabs.Content>
-            <Tabs.Content value="education">
+            <Tabs.Content value="education" className="px-card px-card--panel">
               <Education />
             </Tabs.Content>
-            <Tabs.Content value="skills">
+            <Tabs.Content value="skills" className="px-card px-card--panel">
               <Skills />
             </Tabs.Content>
-            <Tabs.Content value="contact">
+            <Tabs.Content value="contact" className="px-card px-card--panel">
               <Contact />
             </Tabs.Content>
           </Tabs.Root>

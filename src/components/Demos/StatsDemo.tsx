@@ -106,7 +106,7 @@ export const StatsDemo = () => {
                 </option>
               ))}
             </select>
-            {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+            {error && <p style={{ color: "#fc8181", marginTop: "10px" }}>{error}</p>}
           </div>
         </GridItem>
 
@@ -132,7 +132,7 @@ export const StatsDemo = () => {
                 </option>
               ))}
             </select>
-            {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+            {error && <p style={{ color: "#fc8181", marginTop: "10px" }}>{error}</p>}
           </div>
         </GridItem>
       </Grid>

@@ -12,17 +12,16 @@ export const PersonalInfo = () => {
       <Card.Root
         size="sm"
         m={4}
-        transition="transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out" /* Aplica la transición en todos los estados */
-        _hover={{
-          transform: "scale(1.01)",
-          boxShadow: "0px 10px 20px rgba(255, 255, 255, 0.3)",
-        }}
+        className="px-card"
+        bg="transparent"
+        border="none"
+        boxShadow="none"
       >
         <Card.Header>
-          <Text className="kicker" mb={1}>{"// 01"}</Text>
-          <Heading className="subtitle" size={'md'}><GlitchText text={t.about.title} /></Heading>
+          <Text className="px-kicker" mb={1}>{"// 01"}</Text>
+          <Heading className="px-title" size={'md'}><GlitchText text={t.about.title} /></Heading>
         </Card.Header>
-        <Card.Body color="fg.muted">
+        <Card.Body color="gray.300">
           <p className="paragraph">
             {t.about.paragraph}
           </p>

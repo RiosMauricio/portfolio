@@ -1,74 +1,85 @@
-.Dock {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+/* ============ Botonera arcade ============
+   El dock se convierte en una hilera de botones arcade sobre la
+   "barbilla" del monitor: cap redondo con brillo, collar oscuro y
+   estado presionado que se hunde 2px. --btn llega inline por canal. */
+
+.dock {
   display: flex;
   align-items: flex-end;
-  gap: 12px;
-  padding: 8px 14px;
-  background: rgba(20, 22, 26, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  z-index: 3;
+  justify-content: center;
+  gap: clamp(10px, 2.6vw, 26px);
+  order: 1;
 }
 
-.dock-app {
+.arcade-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.arcade-btn {
   position: relative;
-  width: clamp(38px, 4.5vw, 54px);
-  height: clamp(38px, 4.5vw, 54px);
-  border-radius: 12px;
+  width: clamp(46px, 6vw, 58px);
+  height: clamp(46px, 6vw, 58px);
+  border: none;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(19px, 2.3vw, 27px);
-  color: #dbe2ec;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  font-size: clamp(19px, 2.4vw, 24px);
+  color: rgba(0, 0, 0, 0.55);
   cursor: pointer;
-  transition: transform 0.18s ease-out, background 0.18s ease-out;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 38%),
+    radial-gradient(
+      circle at 50% 55%,
+      color-mix(in srgb, var(--btn) 88%, white) 0%,
+      var(--btn) 46%,
+      color-mix(in srgb, var(--btn) 62%, black) 100%
+    );
+  box-shadow:
+    0 5px 0 color-mix(in srgb, var(--btn) 45%, black),
+    0 7px 14px rgba(0, 0, 0, 0.5),
+    0 0 0 4px #0b0d12,
+    inset 0 -6px 10px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px rgba(255, 255, 255, 0.35);
+  transition: transform 0.07s ease-out, box-shadow 0.07s ease-out, filter 0.12s ease-out;
 }
 
-.dock-app:hover {
-  transform: translateY(-6px) scale(1.12);
-  background: rgba(255, 255, 255, 0.16);
+.arcade-btn:hover {
+  filter: brightness(1.12);
 }
 
-/* Tooltip con el nombre de la app */
-.dock-app::after {
-  content: attr(data-name);
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(15, 17, 21, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 7px;
+/* Prensado: se hunde 2px y el aro de brillo se enciende. */
+.arcade-btn:active,
+.arcade-btn.is-active {
+  transform: translateY(2px);
+  box-shadow:
+    0 3px 0 color-mix(in srgb, var(--btn) 45%, black),
+    0 4px 8px rgba(0, 0, 0, 0.5),
+    0 0 0 4px #0b0d12,
+    0 0 16px color-mix(in srgb, var(--btn) 70%, transparent),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.35),
+    inset 0 3px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* El canal encendido queda hundido y un poco más luminoso. */
+.arcade-btn.is-active {
+  filter: brightness(1.18) saturate(1.15);
+}
+
+.arcade-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.arcade-label {
+  font-family: var(--font-pixel);
+  font-size: clamp(7px, 1.5vw, 9px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--btn) 78%, #cfd8e8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.15s ease-out;
-  pointer-events: none;
-}
-
-.dock-app:hover::after {
-  opacity: 1;
-}
-
-/* Animación de la ventana de demo saliendo del dock (efecto genie simplificado) */
-@keyframes demo-window-in {
-  from {
-    transform: translateY(90px) scale(0.82);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
 }

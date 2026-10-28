@@ -108,10 +108,196 @@ so that it is smooth among other more minor things */
 }
 
 .project-cards-text {
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition: box-shadow 0.3s ease-in-out;
 }
 
 .project-cards-text:hover {
-  transform: scale(1.01);
-  box-shadow: 0px 10px 20px rgba(255, 255, 255, 0.103);
+  box-shadow: 0 0 0 1px rgba(144, 205, 244, 0.35), 0 0 22px rgba(99, 179, 237, 0.22);
+}
+
+/* ---------- Tubo CRT de los TVs ----------
+   Todas las capas de efecto usan pointer-events:none: los controles
+   nativos del video quedan clicables. .is-on se latchea la primera vez
+   que la card entra en viewport (ver CrtScreen.tsx / ProjectsList). */
+.crt-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #04060b;
+}
+
+/* Pantalla de fósforo: crece desde una línea fina y queda debajo del
+   media (el contenedor del media tiene fondo negro y la cubre). */
+.crt-power {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(130% 130% at 50% 50%, #ffffff 55%, #cfe4ff 100%);
+  transform: scale(0, 0.004);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.crt-screen.is-on .crt-power {
+  animation: crt-power-on 350ms cubic-bezier(0.25, 0.8, 0.3, 1) both;
+}
+
+@keyframes crt-power-on {
+  0% {
+    opacity: 1;
+    transform: scale(0.03, 0.004);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1, 0.004);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.crt-media {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: #000;
+  opacity: 0;
+}
+
+.crt-screen.is-on .crt-media {
+  animation: crt-media-in 180ms ease-out 600ms both;
+}
+
+@keyframes crt-media-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Burst de estática: feTurbulence inline (igual técnica que .bg-fx-grain),
+   saltos discretos en steps() durante ~320ms tras el power-on. */
+.crt-static {
+  position: absolute;
+  inset: -20%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.crt-screen.is-on .crt-static {
+  animation: crt-static-burst 320ms steps(6, end) 350ms both;
+}
+
+@keyframes crt-static-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  5% {
+    opacity: 0.95;
+    transform: translate(-2.5%, 1.5%);
+  }
+  20% {
+    opacity: 0.95;
+    transform: translate(-2.5%, 1.5%);
+  }
+  40% {
+    opacity: 0.92;
+    transform: translate(2%, -1.5%);
+  }
+  60% {
+    opacity: 0.92;
+    transform: translate(-1.5%, -2.5%);
+  }
+  80% {
+    opacity: 0.9;
+    transform: translate(1.5%, 2%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+}
+
+/* Scanlines + viñeta + reflejo + glow interno: la capa "vidrio" permanente. */
+.crt-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.015) 22%, transparent 34%),
+    radial-gradient(135% 135% at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.38) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0, rgba(0, 0, 0, 0.22) 1px, transparent 1px, transparent 3px);
+  box-shadow:
+    inset 0 0 22px rgba(140, 190, 255, 0.12),
+    inset 0 0 8px rgba(0, 0, 0, 0.55);
+}
+
+/* OSD "CH nn": aparece tras el cambio de canal, se desvanece ~2s y
+   vuelve mientras el cursor está sobre la pantalla. */
+.crt-osd {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 5;
+  pointer-events: none;
+  font-family: var(--font-pixel);
+  font-size: clamp(8px, 1vw, 11px);
+  letter-spacing: 0.1em;
+  color: #8fff9e;
+  text-shadow:
+    0 0 2px rgba(140, 255, 158, 0.9),
+    0 0 8px rgba(120, 255, 140, 0.55);
+  opacity: 0;
+}
+
+.crt-screen.is-on .crt-osd {
+  animation: crt-osd-cycle 2.4s linear 620ms both;
+}
+
+@keyframes crt-osd-cycle {
+  0% {
+    opacity: 0;
+  }
+  7% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (hover: hover) {
+  .crt-screen:hover .crt-osd {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crt-power,
+  .crt-static {
+    display: none !important;
+  }
+
+  .crt-media {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .crt-osd,
+  .crt-screen.is-on .crt-osd {
+    animation: none !important;
+    opacity: 1 !important;
+  }
 }

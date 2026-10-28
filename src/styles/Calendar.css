@@ -1,10 +1,34 @@
-/* Fondo de los días de la semana */
-.fc .fc-col-header-cell {
-  background-color: #1a202c; /* Fondo oscuro */
-  color: #ffffff; /* Texto blanco */
+/* FullCalendar dentro del tubo CRT: el único consumidor es CalendarDemo,
+   que monta dentro de .mcrt-demo (ya en scope .dark para tokens Chakra).
+   Los --fc-* vienen de :root en el CSS de FullCalendar; acá se repuntan
+   a la superficie oscura de la card (#23272f). */
+.mcrt-demo .fc {
+  --fc-page-bg-color: #23272f;
+  --fc-neutral-bg-color: rgba(255, 255, 255, 0.06);
+  --fc-neutral-text-color: #d7dee8;
+  --fc-border-color: #3c4356;
+  --fc-today-bg-color: rgba(99, 179, 237, 0.16);
+  --fc-highlight-color: rgba(99, 179, 237, 0.22);
+  --fc-non-business-color: rgba(0, 0, 0, 0.2);
+  color: #e6edf6;
 }
 
-/* Bordes opcionales entre columnas */
-.fc .fc-col-header-cell {
-  border-color: #2d3748;
+/* Fondo y texto de las cabeceras de día (Sun, Mon, …). */
+.mcrt-demo .fc .fc-col-header-cell {
+  background-color: #1a202c;
+  color: #ffffff;
+  border-color: #3c4356;
+}
+
+.mcrt-demo .fc .fc-toolbar-title {
+  color: #eef2f7;
+}
+
+.mcrt-demo .fc .fc-daygrid-day-number {
+  color: #dfe6ef;
+}
+
+/* Días de otros meses: atenuados pero aún legibles (~5:1 sobre la card). */
+.mcrt-demo .fc .fc-day-other .fc-daygrid-day-top {
+  opacity: 0.65;
 }

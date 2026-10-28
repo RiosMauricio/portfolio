@@ -13,7 +13,7 @@ export const translations = {
     hero: {
       kicker: "// Desarrollador Full Stack · Jujuy, AR",
       greeting: "HOLA, SOY MAURICIO RIOS.",
-      value: "Construyo interfaces web rápidas y accesibles con React y TypeScript, y las conecto de punta a punta con Node.js.",
+      value: "Construyo productos web de punta a punta: interfaces cuidadas, rápidas y accesibles, de la idea a producción.",
       availability: "Disponible para nuevos proyectos",
       ctaProjects: "Ver proyectos",
       ctaCv: "Descargar CV",
@@ -205,7 +205,7 @@ export const translations = {
     hero: {
       kicker: "// Full Stack Developer · Jujuy, AR",
       greeting: "HI, I'M MAURICIO RIOS.",
-      value: "I build fast, accessible web interfaces with React and TypeScript, and wire them end to end with Node.js.",
+      value: "I build web products end to end: polished, fast and accessible interfaces, from idea to production.",
       availability: "Open to new opportunities",
       ctaProjects: "View projects",
       ctaCv: "Download CV (ES)",

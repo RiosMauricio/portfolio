@@ -302,3 +302,209 @@
     text-align: center;
   }
 }
+
+/* ---------- Info cards "pixel corner" (About) ----------
+   Esquinas escalonadas de 3 pasos de 4px: la card se recorta con un
+   clip-path en escalera y se pinta con el color del borde; un ::before
+   inset 1px repite el mismo clip, dejando un outline dentado de 1px.
+   La superficie es navy translúcido + blur para que la card pertenezca
+   al fondo aurora en vez de flotar como un bloque gris plano. */
+.px-card {
+  --px-border: rgba(148, 201, 255, 0.3);
+  position: relative;
+  border-radius: 0;
+  background-color: var(--px-border);
+  clip-path: polygon(
+    0 12px, 4px 12px, 4px 8px, 8px 8px, 8px 4px, 12px 4px, 12px 0,
+    calc(100% - 12px) 0, calc(100% - 12px) 4px, calc(100% - 8px) 4px,
+    calc(100% - 8px) 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px,
+    100% 12px,
+    100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px),
+    calc(100% - 4px) calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px),
+    calc(100% - 12px) 100%,
+    12px 100%, 12px calc(100% - 4px), 8px calc(100% - 4px),
+    8px calc(100% - 8px), 4px calc(100% - 8px), 4px calc(100% - 12px),
+    0 calc(100% - 12px)
+  );
+  transition: background-color 0.25s var(--ease-out);
+}
+
+.px-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  clip-path: polygon(
+    0 12px, 4px 12px, 4px 8px, 8px 8px, 8px 4px, 12px 4px, 12px 0,
+    calc(100% - 12px) 0, calc(100% - 12px) 4px, calc(100% - 8px) 4px,
+    calc(100% - 8px) 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px,
+    100% 12px,
+    100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px),
+    calc(100% - 4px) calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px),
+    calc(100% - 12px) 100%,
+    12px 100%, 12px calc(100% - 4px), 8px calc(100% - 4px),
+    8px calc(100% - 8px), 4px calc(100% - 8px), 4px calc(100% - 12px),
+    0 calc(100% - 12px)
+  );
+  background-color: rgba(11, 20, 44, 0.62);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.018) 0,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  transition: box-shadow 0.25s var(--ease-out);
+}
+
+.px-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover: glow en el borde al acento, sin scale ni sombra blanca. */
+.px-card:hover {
+  --px-border: rgba(144, 205, 244, 0.55);
+}
+
+.px-card:hover::before {
+  box-shadow: inset 0 0 20px rgba(99, 179, 237, 0.14);
+}
+
+/* Paneles internos (tabpanels de Formation): versión empotrada, borde
+   y superficie más tenues que la card que los contiene. */
+.px-card--panel {
+  --px-border: rgba(148, 201, 255, 0.2);
+  padding: 14px 16px;
+}
+
+.px-card--panel::before {
+  background-color: rgba(7, 12, 28, 0.5);
+}
+
+.px-card--panel:hover {
+  --px-border: rgba(144, 205, 244, 0.32);
+}
+
+.px-card--panel:hover::before {
+  box-shadow: inset 0 0 14px rgba(99, 179, 237, 0.09);
+}
+
+/* Respiro extra para que el contenido no toque las esquinas dentadas. */
+.px-card .chakra-card__header {
+  padding-top: 16px;
+  padding-inline: 20px;
+}
+
+.px-card .chakra-card__body {
+  padding-inline: 20px;
+  padding-bottom: 16px;
+}
+
+/* Tipografía pixel solo para kicker/títulos cortos; párrafos en Quicksand. */
+.px-kicker {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.px-title {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #eef3fc;
+}
+
+/* El sitio renderiza Chakra en modo claro: los textos que heredan
+   fg/fg.muted saldrían oscuros sobre la superficie navy. Todo texto
+   dentro de las px-cards usa grises claros fijos (constantes, no tokens
+   de tema) para ser legible en ambos color modes. */
+.px-card .chakra-heading,
+.px-card .subtitle {
+  color: #e8eef9;
+}
+
+/* Chakra pinta caption/list de blockquote con fg.muted (oscuro en modo
+   claro): los re-alineamos al color del body de la card. */
+.px-card .chakra-blockquote__caption,
+.px-card .chakra-list__item,
+.px-card cite {
+  color: #c7d0df;
+}
+
+/* ---------- Tabs arcade (Formation) ----------
+   Items de menú en font-pixel; el activo muestra el marcador "▶" en el
+   acento y los demás quedan muted. El foco de teclado usa el outline
+   global del sitio. */
+.arcade-tabs .chakra-tabs__list {
+  gap: 2px;
+  border-bottom: 1px solid var(--line);
+  padding: 0 2px 8px;
+  margin-bottom: 12px;
+}
+
+.arcade-tabs .chakra-tabs__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 0;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  transition: color 0.15s var(--ease-out), background-color 0.15s var(--ease-out);
+}
+
+/* Marcador de menú arcade: ::after reordenado al frente del item
+   (::before ya lo usa Chakra como indicador underline del tab activo). */
+.arcade-tabs .chakra-tabs__trigger::after {
+  content: "▶";
+  order: -1;
+  font-size: 0.8em;
+  color: var(--accent);
+  opacity: 0;
+  text-shadow: 0 0 8px rgba(99, 179, 237, 0.7);
+}
+
+/* Underline de Chakra (::before absoluto) reteñido al acento. */
+.arcade-tabs .chakra-tabs__trigger[data-selected]::before,
+.arcade-tabs .chakra-tabs__trigger[aria-selected="true"]::before {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(99, 179, 237, 0.55);
+}
+
+.arcade-tabs .chakra-tabs__trigger:hover {
+  color: var(--accent-strong);
+  background-color: rgba(99, 179, 237, 0.09);
+}
+
+.arcade-tabs .chakra-tabs__trigger[data-selected],
+.arcade-tabs .chakra-tabs__trigger[aria-selected="true"] {
+  color: var(--accent-strong);
+  text-shadow: 0 0 8px rgba(99, 179, 237, 0.45);
+}
+
+.arcade-tabs .chakra-tabs__trigger[data-selected]::after,
+.arcade-tabs .chakra-tabs__trigger[aria-selected="true"]::after {
+  opacity: 1;
+}
+
+.arcade-tabs .chakra-tabs__trigger:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-card,
+  .px-card::before,
+  .arcade-tabs .chakra-tabs__trigger {
+    transition: none !important;
+  }
+}
