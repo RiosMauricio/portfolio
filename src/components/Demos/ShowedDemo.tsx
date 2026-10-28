@@ -1,5 +1,5 @@
 import { CalendarDemo } from "./CalendarDemo"
-import { StatsDemo } from "./StatsDemo"
+import { KanbanDemo } from "./KanbanDemo"
 import { MapDemo } from "./MapDemo"
 import { FormDemo } from "./FormDemo"
 import { TerminalDemo } from "./TerminalDemo"
@@ -11,8 +11,8 @@ export const ShowedDemo = ({ mode }: { mode: string }) => {
 
   const getDemoContent = () => {
     switch (mode) {
-      case 'stats':
-        return <StatsDemo />;
+      case 'kanban':
+        return <KanbanDemo />;
       case 'calendar':
         return <CalendarDemo />;
       case 'map':
@@ -22,13 +22,13 @@ export const ShowedDemo = ({ mode }: { mode: string }) => {
       case 'terminal':
         return <TerminalDemo />;
       default:
-        return <StatsDemo />;
+        return <KanbanDemo />;
     }
   };
 
   const titles = t.demos.dialogTitles;
   const titleMap: Record<string, string> = {
-    stats: titles.stats,
+    kanban: titles.kanban,
     calendar: titles.calendar,
     map: titles.map,
     form: titles.form,
@@ -36,7 +36,7 @@ export const ShowedDemo = ({ mode }: { mode: string }) => {
   };
 
   return (
-    <div className="mcrt-demo" role="document" aria-label={titleMap[mode] ?? titles.stats}>
+    <div className="mcrt-demo" role="document" aria-label={titleMap[mode] ?? titles.kanban}>
       {/* key remonta el boundary en cada canal para resetear hasError */}
       <DemoErrorBoundary key={mode}>
         {getDemoContent()}

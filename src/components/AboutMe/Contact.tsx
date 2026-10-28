@@ -1,53 +1,89 @@
-import { Grid, GridItem, Box, Image, Text } from "@chakra-ui/react"
+import { useState } from "react"
+import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa"
+import { useLanguage } from "@/i18n/languageContext"
+import "@/styles/AboutMe.css"
+
+const EMAIL = "riosmaurii@gmail.com"
+
+const COPY_TEXT = {
+  es: { label: "Copiar", done: "¡Copiado!" },
+  en: { label: "Copy", done: "Copied!" },
+} as const
 
 export const Contact = () => {
+  const { lang } = useLanguage();
+  const [copied, setCopied] = useState(false)
+  const copyText = COPY_TEXT[lang]
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1500)
+    } catch {
+      // Portapapeles no disponible (permiso denegado o contexto inseguro).
+    }
+  }
+
   const contacts = [
     {
-      href: "mailto:riosmaurii@gmail.com",
-      img: "/assets/gmailIcon.jpg",
-      label: "riosmaurii@gmail.com",
+      key: "email",
+      href: `mailto:${EMAIL}`,
+      icon: FaEnvelope,
+      label: "EMAIL",
+      value: EMAIL,
       external: false,
     },
     {
+      key: "linkedin",
       href: "https://www.linkedin.com/in/rios-mauricio-4504532b9",
-      img: "/assets/likedinIcon.png",
-      label: "LinkedIn — Rios Mauricio",
+      icon: FaLinkedin,
+      label: "LINKEDIN",
+      value: "in/rios-mauricio",
       external: true,
     },
     {
+      key: "github",
       href: "https://github.com/RiosMauricio",
-      img: "/assets/githubIcon.png",
-      label: "GitHub — RiosMauricio",
+      icon: FaGithub,
+      label: "GITHUB",
+      value: "@RiosMauricio",
       external: true,
     },
   ];
 
   return (
-    <>
-      <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={4}>
-        {contacts.map(({ href, img, label, external }) => (
-          <GridItem key={href}>
+    <div className="contact">
+      <p className="contact-prompt">{"> contact --open"}</p>
+      <div className="contact-grid">
+        {contacts.map(({ key, href, icon: ContactIcon, label, value, external }) => (
+          <div key={key} className="px-card contact-card">
             <a
               href={href}
+              className="contact-link"
+              aria-label={`${label}: ${value}`}
               {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             >
-              <Box
-                display={'flex'}
-                justifyContent={'center'}
-                alignItems={'center'}
-                flexDirection={'column'}
-                borderRadius={5}
-                p={3}
-                _hover={{ backgroundColor: 'blue.900' }}
-                transition="background-color 0.2s"
-              >
-                <Image src={img} h={'18vh'} alt={label} />
-                <Text mt={4} mb={2} color="blue.300" fontSize="sm">{label}</Text>
-              </Box>
+              <ContactIcon className="contact-icon" aria-hidden="true" />
+              <span className="contact-texts">
+                <span className="contact-label">{label}</span>
+                <span className="contact-value">{value}</span>
+              </span>
+              <span className="contact-arrow" aria-hidden="true">▶</span>
             </a>
-          </GridItem>
+            {key === "email" && (
+              <button
+                type="button"
+                className={`contact-copy${copied ? " is-copied" : ""}`}
+                onClick={copyEmail}
+                aria-live="polite"
+              >
+                {copied ? copyText.done : copyText.label}
+              </button>
+            )}
+          </div>
         ))}
-      </Grid>
-    </>
+      </div>
+    </div>
   )
 }

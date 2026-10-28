@@ -189,19 +189,6 @@
   min-width: 0;
 }
 
-/* <select> nativo (StatsDemo): el UA los pinta claros por defecto y el
-   componente trae `border` inline, así que el borde necesita !important. */
-.mcrt-demo select {
-  background-color: #131a29;
-  color: #e6edf6;
-  border: 1px solid #3d4a63 !important;
-}
-
-.mcrt-demo select option {
-  background-color: #131a29;
-  color: #e6edf6;
-}
-
 /* ---------- Cambio de canal: flash de estática ---------- */
 .mcrt-static {
   position: absolute;

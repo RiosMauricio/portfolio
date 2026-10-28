@@ -1,10 +1,11 @@
 import { CSSProperties, useEffect, useState } from "react";
-import { Separator, Grid, GridItem, Box, Badge, Flex, Link, Icon } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import ReactPlayer from "react-player";
 import { useInView } from "@/hooks/useInView";
 import { useLanguage } from "@/i18n/languageContext";
 import { CrtScreen } from "@/components/CrtScreen";
+import { RetroTv } from "@/components/Projects/RetroTv";
 
 interface ProjectCardData {
   videoUrl?: string;
@@ -17,6 +18,10 @@ interface ProjectCardData {
   liveUrl?: string;
   playbackRate?: number;
 }
+
+/* Acento por canal: rota en el LED/etiqueta de la TV y el marcador del
+   título de la card (--rtv-accent en el GridItem alcanza a ambos). */
+const CHANNEL_ACCENTS = ["#63b3ed", "#22d3ee", "#f472b6", "#fbbf24"];
 
 const ProjectCard = ({ card, channel, delay = 0 }: { card: ProjectCardData; channel: number; delay?: number }) => {
   const { ref, inView } = useInView<HTMLDivElement>(0.25);
@@ -32,98 +37,84 @@ const ProjectCard = ({ card, channel, delay = 0 }: { card: ProjectCardData; chan
 
   return (
     <GridItem
-      position="relative"
       mt={4}
       ref={revealRef}
       className={revealed ? "reveal is-revealed" : "reveal"}
-      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
+      style={{
+        "--reveal-delay": `${delay}ms`,
+        "--rtv-accent": CHANNEL_ACCENTS[(channel - 1) % CHANNEL_ACCENTS.length],
+      } as CSSProperties}
     >
-      {/* TV retro: imagen de marco + video dentro del área de pantalla */}
-      <Box position="relative" w="85%" margin="auto">
-        <img
-          src="/assets/tv.png"
-          alt=""
-          style={{ display: "block", width: "100%" }}
-        />
-        {/* Pantalla del TV: ocupa ~x 32-415 / y 49-310 del marco (546x350) */}
-        <Box
-          ref={ref}
-          position="absolute"
-          left="6.4%"
-          top="15.2%"
-          w="69.5%"
-          h="72%"
-          borderRadius="8px"
-          overflow="hidden"
-          bg="#0d0f14"
-          boxShadow="inset 0 0 18px rgba(170, 200, 255, 0.28), 0 0 26px 2px rgba(215, 228, 255, 0.30)"
-        >
-          <CrtScreen channel={channel} powered={powered}>
-            {card.videoUrl ? (
-              <ReactPlayer
-                url={card.videoUrl}
-                width="100%"
-                height="100%"
-                playing={inView}
-                controls
-                loop
-                muted
-                playbackRate={card.playbackRate ?? 1.75}
-                config={{
-                  file: { attributes: { style: { width: "100%", height: "100%", objectFit: "cover" } } },
-                }}
-              />
-            ) : (
-              <img
-                src={card.image}
-                alt={card.projectTitle}
-                style={{ width: "100%", height: "100%", objectFit: "contain" }}
-              />
-            )}
-          </CrtScreen>
-        </Box>
-      </Box>
+      {/* TV retro dibujada con CSS (RetroTv): el video/imagen va en el tubo */}
+      <RetroTv channel={channel} powered={powered} screenRef={ref}>
+        <CrtScreen channel={channel} powered={powered}>
+          {card.videoUrl ? (
+            <ReactPlayer
+              url={card.videoUrl}
+              width="100%"
+              height="100%"
+              playing={inView}
+              controls
+              loop
+              muted
+              playbackRate={card.playbackRate ?? 1.75}
+              config={{
+                file: { attributes: { style: { width: "100%", height: "100%", objectFit: "cover" } } },
+              }}
+            />
+          ) : (
+            <img
+              src={card.image}
+              alt={card.projectTitle}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            />
+          )}
+        </CrtScreen>
+      </RetroTv>
 
-      {/* Descripcion */}
-      <Box
-        mt={5}
-        w={'100%'}
-        display="flex" /* Añade flex para habilitar el centrado */
-        justifyContent="center"
-        alignItems="center"
-      >
-        <div className="codepen-button project-cards-text">
-          <span className="codepen-button-content">
-            <Flex alignItems="center" justifyContent="center" gap={3}>
-              <p className="codepen-button-title">{card.projectTitle}</p>
-              {card.repoUrl && (
-                <Link href={card.repoUrl} target="_blank" rel="noopener noreferrer" aria-label={t.projects.repoLabel} title={t.projects.repoLabel}>
-                  <Icon color="#c8c8c8" _hover={{ color: 'white' }} boxSize={5}>
-                    <FaGithub />
-                  </Icon>
-                </Link>
-              )}
-              {card.liveUrl && (
-                <Link href={card.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={t.projects.liveLabel} title={t.projects.liveLabel}>
-                  <Icon color="#c8c8c8" _hover={{ color: 'white' }} boxSize={4}>
-                    <FaExternalLinkAlt />
-                  </Icon>
-                </Link>
-              )}
-            </Flex>
-            <Separator></Separator>
-            <p className="codepen-button-text">{card.bodyText}</p>
-            <Flex justifyContent="center" gap={2} flexWrap="wrap" my={2}>
-              {card.techStack.map((tech) => (
-                <Badge key={tech} size="sm" colorPalette="blue" variant="subtle">
-                  {tech}
-                </Badge>
-              ))}
-            </Flex>
-            <p className="codepen-button-footer">{card.footerText}</p>
-          </span>
+      {/* Ficha del proyecto: misma lengua "pixel corner" que las .px-card */}
+      <div className="proj-card">
+        <div className="proj-card-inner">
+          <div className="proj-card-head">
+            <p className="proj-card-title">{card.projectTitle.replace(/\.$/, "")}</p>
+            {(card.repoUrl || card.liveUrl) && (
+              <div className="proj-card-links">
+                {card.repoUrl && (
+                  <a
+                    className="proj-link"
+                    href={card.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t.projects.repoLabel}
+                  >
+                    <FaGithub aria-hidden="true" />
+                    <span>{t.projects.repoLabel}</span>
+                  </a>
+                )}
+                {card.liveUrl && (
+                  <a
+                    className="proj-link"
+                    href={card.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={t.projects.liveLabel}
+                  >
+                    <FaExternalLinkAlt aria-hidden="true" />
+                    <span>{t.projects.liveLabel}</span>
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+          <p className="proj-card-text">{card.bodyText}</p>
+          <div className="proj-chips">
+            {card.techStack.map((tech) => (
+              <span key={tech} className="proj-chip">{tech}</span>
+            ))}
+          </div>
+          <p className="proj-card-footer">{card.footerText}</p>
         </div>
-      </Box>
+      </div>
     </GridItem>
   );
 };

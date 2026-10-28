@@ -1,43 +1,38 @@
-import { Card, Icon } from "@chakra-ui/react"
-import { Float } from "@chakra-ui/react"
-import { Blockquote } from "@chakra-ui/react"
 import { Heading } from "@chakra-ui/react"
 import { useLanguage } from "@/i18n/languageContext"
 import "@/styles/AboutMe.css"
+
+// Títulos tipo "… (en curso)" / "… (in progress)": el paréntesis final se
+// extrae y se muestra como badge pixel; el resto queda como título limpio.
+const TRAILING_PARENS = /\s*\(([^()]+)\)\s*$/
+const IN_PROGRESS = /en curso|in progress/i
+
+const splitBadge = (title: string) => {
+  const m = title.match(TRAILING_PARENS)
+  if (m && m.index !== undefined && IN_PROGRESS.test(m[1])) {
+    return { text: title.slice(0, m.index), badge: m[1] }
+  }
+  return { text: title, badge: null }
+}
 
 export const Education = () => {
   const { t } = useLanguage();
 
   return (
-    <>
-      <Card.Root border={'transparent'} bg="transparent" boxShadow="none">
-        <Card.Body color="gray.300">
-          {t.education.map((item, index) => {
-            const alignEnd = index % 2 === 1;
-            return (
-              <Blockquote.Root
-                key={item.title}
-                variant={'plain'}
-                my={2}
-                colorPalette={'blue'}
-                justify={alignEnd ? 'end' : 'start'}
-              >
-                <Float placement={alignEnd ? 'top-end' : 'top-start'} offsetY={"2"}>
-                  <Icon my={2} ml={alignEnd ? 0 : 2} mr={alignEnd ? 2 : 0}>
-                    <img src="/assets/bookspng.png" style={{ height: '3vh', width: '3vh' }} alt="" />
-                  </Icon>
-                </Float>
-                <Blockquote.Content>
-                  <Heading className="subtitle" size={'md'}>{item.title}</Heading>
-                </Blockquote.Content>
-                <Blockquote.Caption>
-                  <cite>{item.place}</cite>
-                </Blockquote.Caption>
-              </Blockquote.Root>
-            );
-          })}
-        </Card.Body>
-      </Card.Root>
-    </>
+    <ol className="px-timeline">
+      {t.education.map((item) => {
+        const { text, badge } = splitBadge(item.title)
+        return (
+          <li key={item.title} className="px-tl-item">
+            <span className="px-tl-marker" aria-hidden="true" />
+            <div className="px-tl-head">
+              <Heading as="h3" size="sm" className="subtitle">{text}</Heading>
+              {badge && <span className="px-badge">{badge}</span>}
+            </div>
+            <p className="px-tl-meta">{item.place}</p>
+          </li>
+        );
+      })}
+    </ol>
   )
 }

@@ -1,118 +1,422 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+/* ---------- TV retro dibujada + ficha de proyecto (/projects) ----------
+   Reemplazan la foto tv.png y las .codepen-button negras: gabinete y card
+   usan la misma clip-path escalonada de 3 pasos que las .px-card de About
+   (esquinas pixeladas, borde pintado por background + ::before inset 1px).
+   El acento por canal llega como --rtv-accent desde el GridItem de cada
+   card y se reusa en LED, etiqueta CH, glow de pantalla y links. */
 
-.player-wrapper {
-  position: relative;
-  padding-top: 56.25%;
-  /* 720 / 1280 = 0.5625 */
+.rtv {
+  --rtv-a: var(--rtv-accent, #63b3ed);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.5));
 }
 
-.react-player {
+/* Antena en V: dos varillas rotadas con punta cuadrada pixel. */
+.rtv-antenna {
+  position: relative;
+  width: 72px;
+  height: 26px;
+  margin-bottom: -4px;
+}
+
+.rtv-antenna i {
   position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 10%;
-  overflow: hidden;
-  background-color: #1a1d24;
-  -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.45);
-  -moz-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.45);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 8px 24px rgba(0, 0, 0, 0.45);
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  margin-left: -2px;
+  transform-origin: 50% 100%;
+  background: linear-gradient(180deg, #6d7ea6 0%, #39466b 100%);
 }
 
-.shadow-tv {
-  -webkit-box-shadow: 10px 10px 3px 0px rgb(59, 39, 31);
-  -moz-box-shadow: 10px 10px 3px 0px rgba(59, 39, 31);
-  box-shadow: 10px 10px 3px 0px rgba(59, 39, 31);
-}
-
-/* From Uiverse.io by umerhassaan */
-/* Yoinked from CodePen, but improved the animation
-so that it is smooth among other more minor things */
-
-.codepen-button {
-  display: block;
-  cursor: pointer;
-  color: white;
-  margin: 0 auto;
-  position: relative;
-  width: 90%;
-  text-decoration: none;
-  font-weight: 60;
-  border-radius: 15px;
-  cursor: initial;
-  overflow: hidden;
-  padding: 2px;
-  isolation: isolate;
-}
-
-.codepen-button::before {
+.rtv-antenna i::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(59, 130, 246, 0.35) 50%, rgba(255, 255, 255, 0.10));
+  top: -1px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -3px;
+  background: #7d8db6;
 }
 
-.codepen-button:hover::before {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(59, 130, 246, 0.55) 50%, rgba(255, 255, 255, 0.14));
+.rtv-antenna i:nth-child(1) {
+  transform: rotate(-27deg);
 }
 
-.codepen-button-content {
+.rtv-antenna i:nth-child(2) {
+  transform: rotate(27deg);
+}
+
+/* Gabinete + ficha: esquinas pixeladas compartidas. */
+.rtv-body,
+.proj-card {
+  --px-border: rgba(148, 201, 255, 0.3);
+  --px-clip: polygon(
+    0 12px, 4px 12px, 4px 8px, 8px 8px, 8px 4px, 12px 4px, 12px 0,
+    calc(100% - 12px) 0, calc(100% - 12px) 4px, calc(100% - 8px) 4px,
+    calc(100% - 8px) 8px, calc(100% - 4px) 8px, calc(100% - 4px) 12px,
+    100% 12px,
+    100% calc(100% - 12px), calc(100% - 4px) calc(100% - 12px),
+    calc(100% - 4px) calc(100% - 8px), calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 4px), calc(100% - 12px) calc(100% - 4px),
+    calc(100% - 12px) 100%,
+    12px 100%, 12px calc(100% - 4px), 8px calc(100% - 4px),
+    8px calc(100% - 8px), 4px calc(100% - 8px), 4px calc(100% - 12px),
+    0 calc(100% - 12px)
+  );
   position: relative;
-  display: block;
-  padding: 1rem 1.5rem;
-  background: #111111;
-  border-radius: 15px;
-  cursor: initial;
+  isolation: isolate;
+  background-color: var(--px-border);
+  clip-path: var(--px-clip);
+  transition: background-color 0.25s var(--ease-out);
+}
+
+.rtv-body::before,
+.proj-card::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  clip-path: var(--px-clip);
+  transition: box-shadow 0.25s var(--ease-out);
+}
+
+.rtv-body > *,
+.proj-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover: glow en el borde al acento, igual que .px-card. */
+.rtv-body:hover,
+.proj-card:hover {
+  --px-border: rgba(144, 205, 244, 0.55);
+}
+
+.rtv-body:hover::before,
+.proj-card:hover::before {
+  box-shadow: inset 0 0 20px rgba(99, 179, 237, 0.14);
+}
+
+/* ---------- Gabinete ---------- */
+.rtv-body {
+  width: 100%;
+  padding: clamp(9px, 2.8%, 14px) clamp(9px, 2.8%, 14px) clamp(8px, 2.4%, 12px);
+}
+
+.rtv-body::before {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.022) 0,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    linear-gradient(180deg, #1a2547 0%, #111a38 45%, #0a1128 100%);
+}
+
+/* Bisel interior oscuro que empotra el tubo. */
+.rtv-bezel {
+  padding: clamp(6px, 2.2%, 10px);
+  border-radius: clamp(8px, 2.6%, 12px);
+  background: linear-gradient(180deg, #05070d 0%, #0a0e19 100%);
+  box-shadow:
+    inset 0 2px 10px rgba(0, 0, 0, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Pantalla 16:9 con leve curvatura; contiene el <CrtScreen>. */
+.rtv-screen {
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #04060b;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  transition: box-shadow 0.4s var(--ease-out);
+}
+
+.rtv.is-on .rtv-screen {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 24px color-mix(in srgb, var(--rtv-a) 20%, transparent);
+}
+
+/* ---------- Panel de control ---------- */
+.rtv-deck {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 2.6%, 12px);
+  padding: clamp(7px, 2.4%, 11px) 2px 0;
+}
+
+/* LED de power + etiqueta, en el acento del canal cuando está encendida. */
+.rtv-led {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: #4d5872;
+  transition: color 0.3s var(--ease-out);
+}
+
+.rtv-led::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #1d2438;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.75),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.rtv.is-on .rtv-led {
+  color: color-mix(in srgb, var(--rtv-a) 75%, #8a97b5);
+}
+
+.rtv.is-on .rtv-led::before {
+  background: var(--rtv-a);
+  box-shadow:
+    0 0 9px 2px color-mix(in srgb, var(--rtv-a) 55%, transparent),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+}
+
+/* Rejilla de parlante: ranuras verticales, ocupa el espacio flexible. */
+.rtv-grille {
+  flex: 1;
+  height: 18px;
+  min-width: 28px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.5) 0,
+    rgba(0, 0, 0, 0.5) 2px,
+    transparent 2px,
+    transparent 8px
+  );
+}
+
+/* Etiqueta "CH nn" tipo LCD empotrado. */
+.rtv-ch {
+  flex: none;
+  padding: 4px 8px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #3f4b66;
+  background: rgba(2, 4, 10, 0.6);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.8),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: color 0.3s var(--ease-out), text-shadow 0.3s var(--ease-out);
+}
+
+.rtv.is-on .rtv-ch {
+  color: var(--rtv-a);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--rtv-a) 70%, transparent);
+}
+
+/* Perillas: círculo con marca indicadora rotada distinto en cada una. */
+.rtv-knobs {
+  display: flex;
+  gap: clamp(6px, 2%, 10px);
+  flex: none;
+}
+
+.rtv-knobs i {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #3d4a66 0%, #232c42 55%, #171e30 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.18),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.55),
+    0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.rtv-knobs i::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 50%;
+  width: 2px;
+  height: 5px;
+  margin-left: -1px;
+  background: rgba(203, 216, 240, 0.8);
+  transform-origin: 50% 6.5px;
+}
+
+.rtv-knobs i:nth-child(1)::before {
+  transform: rotate(-35deg);
+}
+
+.rtv-knobs i:nth-child(2)::before {
+  transform: rotate(40deg);
+}
+
+/* Patitas trapezoidales abiertas hacia afuera. */
+.rtv-feet {
+  position: relative;
+  width: 100%;
+  height: 11px;
+}
+
+.rtv-feet i {
+  position: absolute;
+  top: -1px;
+  width: min(46px, 13%);
   height: 100%;
+  background: linear-gradient(180deg, #131b33, #080d1d);
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.5);
 }
 
-.codepen-button-title {
-  font-size: 1rem;
+.rtv-feet i:nth-child(1) {
+  left: 8%;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.rtv-feet i:nth-child(2) {
+  right: 8%;
+  clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+}
+
+/* ---------- Ficha del proyecto (lengua .px-card) ---------- */
+.proj-card {
+  margin-top: 12px;
+}
+
+.proj-card::before {
+  background-color: rgba(11, 20, 44, 0.62);
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.018) 0,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+}
+
+.proj-card-inner {
+  padding: 14px 16px 12px;
+}
+
+.proj-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Título pixel con marcador cuadrado en el acento del canal: ata la
+   ficha a su TV como etiqueta del cartucho. */
+.proj-card-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--font-pixel);
+  font-size: 13px;
   font-weight: 400;
-  font-family: 'Nunito sans', sans-serif;
-  /* Agrega la fuente importada */
+  letter-spacing: 0.03em;
+  color: #eef3fc;
 }
 
-.codepen-button-text {
+.proj-card-title::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--rtv-accent, var(--accent));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--rtv-accent, var(--accent)) 65%, transparent);
+}
+
+.proj-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Botones repo/live: chip mono con ícono + texto. */
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition:
+    border-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out),
+    background-color 0.2s var(--ease-out);
+}
+
+.proj-link svg {
+  width: 11px;
+  height: 11px;
+  flex: none;
+}
+
+.proj-link:hover {
+  border-color: color-mix(in srgb, var(--rtv-accent, var(--accent)) 60%, transparent);
+  background-color: color-mix(in srgb, var(--rtv-accent, var(--accent)) 12%, transparent);
+  color: #eef3fc;
+}
+
+.proj-card-text {
+  margin: 10px 0 0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #c7d0df;
+}
+
+/* Badges de stack: chips pixel chicos en mono. */
+.proj-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
   margin-top: 10px;
-  font-size: 0.85rem;
-  font-weight: 300;
-  font-family: 'Nunito sans', sans-serif;
-  /* Agrega la fuente importada */
-  color: #A1A1A1;
 }
 
-.codepen-button-footer {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  font-weight: 300;
-  font-family: 'Nunito sans', sans-serif;
-  color: #ffffff;
-  text-align: right; /* Alinea el texto a la derecha */
+.proj-chip {
+  padding: 2px 7px;
+  border: 1px solid rgba(148, 201, 255, 0.22);
+  background: rgba(99, 179, 237, 0.07);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: #b8cbe8;
 }
 
-.first-text {
-  font-family: 'Raleway sans', sans-serif;
-  /* Agrega la fuente importada */
-  color: rgb(238, 238, 238);
-  font-weight: 100;
-}
-
-.global-card {
-  -webkit-box-shadow: 0px 0px 18px 5px rgba(51, 51, 35, 1);
-  -moz-box-shadow: 0px 0px 18px 5px rgba(51, 51, 35, 1);
-  box-shadow: 0px 0px 18px 5px rgba(51, 51, 35, 1);
-}
-
-.project-cards-text {
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.project-cards-text:hover {
-  box-shadow: 0 0 0 1px rgba(144, 205, 244, 0.35), 0 0 22px rgba(99, 179, 237, 0.22);
+.proj-card-footer {
+  margin: 10px 0 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: right;
 }
 
 /* ---------- Tubo CRT de los TVs ----------
@@ -225,19 +529,20 @@ so that it is smooth among other more minor things */
   }
 }
 
-/* Scanlines + viñeta + reflejo + glow interno: la capa "vidrio" permanente. */
+/* Scanlines + viñeta + reflejo + glow interno: la capa "vidrio" permanente.
+   Alphas bajos para que los videos de fondo claro no se laven a gris. */
 .crt-fx {
   position: absolute;
   inset: 0;
   z-index: 4;
   pointer-events: none;
   background:
-    linear-gradient(165deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.015) 22%, transparent 34%),
-    radial-gradient(135% 135% at 50% 42%, transparent 55%, rgba(0, 0, 0, 0.38) 100%),
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0, rgba(0, 0, 0, 0.22) 1px, transparent 1px, transparent 3px);
+    linear-gradient(165deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.012) 22%, transparent 34%),
+    radial-gradient(135% 135% at 50% 42%, transparent 62%, rgba(0, 0, 0, 0.2) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.09) 0, rgba(0, 0, 0, 0.09) 1px, transparent 1px, transparent 3px);
   box-shadow:
-    inset 0 0 22px rgba(140, 190, 255, 0.12),
-    inset 0 0 8px rgba(0, 0, 0, 0.55);
+    inset 0 0 18px rgba(140, 190, 255, 0.1),
+    inset 0 0 6px rgba(0, 0, 0, 0.4);
 }
 
 /* OSD "CH nn": aparece tras el cambio de canal, se desvanece ~2s y

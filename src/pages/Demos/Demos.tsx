@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { ShowedDemo } from "@/components/Demos/ShowedDemo";
 import { CrtBoot } from "@/components/Demos/CrtBoot";
-import { IoStatsChart } from "react-icons/io5";
+import { LuKanban } from "react-icons/lu";
 import { FaRegCalendarAlt, FaWpforms, FaTerminal } from "react-icons/fa";
 import "@/styles/Monitor.css";
 import "@/styles/Dock.css";
@@ -74,7 +74,7 @@ export const Demos = () => {
   }, [mode, changeChannel]);
 
   const dockApps = [
-    { mode: "stats", num: "01", color: "#22d3ee", icon: <IoStatsChart />, label: t.demos.dock.stats },
+    { mode: "kanban", num: "01", color: "#22d3ee", icon: <LuKanban />, label: t.demos.dock.kanban },
     { mode: "calendar", num: "02", color: "#f472b6", icon: <FaRegCalendarAlt />, label: t.demos.dock.calendar },
     { mode: "form", num: "03", color: "#fbbf24", icon: <FaWpforms />, label: t.demos.dock.form },
     { mode: "terminal", num: "04", color: "#4ade80", icon: <FaTerminal />, label: t.demos.dock.terminal },

@@ -508,3 +508,293 @@
     transition: none !important;
   }
 }
+
+/* ---------- Timeline (Educación / Trabajos) ----------
+   Lista vertical alineada a la izquierda: una línea fina de 1px recorre
+   los ítems y cada uno lleva un marcador cuadrado de 10px en el acento
+   (sin border-radius, coherente con las esquinas pixel de .px-card). */
+.px-timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 4px 26px;
+}
+
+.px-timeline::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 14px;
+  bottom: 14px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(99, 179, 237, 0.5),
+    var(--line) 55%
+  );
+}
+
+.px-tl-item {
+  position: relative;
+  padding: 12px 0;
+}
+
+.px-tl-item:first-child {
+  padding-top: 4px;
+}
+
+.px-tl-item:last-child {
+  padding-bottom: 4px;
+}
+
+.px-tl-marker {
+  position: absolute;
+  left: -20px;
+  top: 17px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(99, 179, 237, 0.55);
+}
+
+.px-tl-item:first-child .px-tl-marker {
+  top: 9px;
+}
+
+/* Fila título + badge: el badge queda alineado al centro del heading
+   y cae a la línea siguiente si el título es largo (mobile). */
+.px-tl-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+/* Badge pixel para "(en curso)" / "(in progress)": font Silkscreen
+   chica, esquinas cuadradas, tinte del acento. */
+.px-badge {
+  flex-shrink: 0;
+  padding: 3px 7px;
+  border: 1px solid rgba(144, 205, 244, 0.4);
+  background: rgba(99, 179, 237, 0.12);
+  color: var(--accent-strong);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.px-tl-meta {
+  margin: 2px 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Bullets de Trabajos: marcador "▸" en el acento, texto legible
+   con medida cómoda (~70ch). */
+.px-tl-points {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-width: 70ch;
+}
+
+.px-tl-points li {
+  position: relative;
+  padding-left: 16px;
+  color: #c7d0df;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.px-tl-points li + li {
+  margin-top: 4px;
+}
+
+.px-tl-points li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+}
+
+/* ---------- Contacto (filas arcade/terminal) ----------
+   Cada contacto es una fila .px-card: ícono react-icons en el acento,
+   etiqueta pixel chica, valor mono muted y "▶" que se desplaza al
+   hover. La card de email suma un botón "copiar" fuera del link para
+   no anidar interactivos. */
+.contact-prompt {
+  margin: 0 0 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.contact-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-card {
+  --px-border: rgba(148, 201, 255, 0.22);
+  display: flex;
+  align-items: stretch;
+}
+
+.contact-card::before {
+  background-color: rgba(7, 12, 28, 0.5);
+}
+
+.contact-card:hover {
+  --px-border: rgba(144, 205, 244, 0.5);
+}
+
+.contact-card:hover::before {
+  box-shadow: inset 0 0 18px rgba(99, 179, 237, 0.12);
+}
+
+.contact-link {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* El outline global (+2px) quedaría fuera del clip-path dentado de la
+   card; se dibuja hacia adentro para que siga siendo visible. */
+.contact-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.contact-icon {
+  flex-shrink: 0;
+  font-size: 22px;
+  color: var(--accent);
+  transition: color 0.2s var(--ease-out), filter 0.2s var(--ease-out);
+}
+
+.contact-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.contact-label {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--accent-strong);
+}
+
+.contact-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+  transition: color 0.2s var(--ease-out);
+}
+
+.contact-arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-left: 10px;
+  font-size: 11px;
+  color: var(--accent);
+  opacity: 0.7;
+  transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-out),
+    text-shadow 0.2s var(--ease-out);
+}
+
+.contact-link:hover .contact-icon,
+.contact-link:focus-visible .contact-icon {
+  color: var(--accent-strong);
+  filter: drop-shadow(0 0 6px rgba(99, 179, 237, 0.7));
+}
+
+.contact-link:hover .contact-value,
+.contact-link:focus-visible .contact-value {
+  color: #e8eef9;
+}
+
+.contact-link:hover .contact-arrow,
+.contact-link:focus-visible .contact-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(99, 179, 237, 0.7);
+}
+
+/* Botón copiar del email: chip pixel cuadrado, hermano del link. */
+.contact-copy {
+  align-self: center;
+  flex-shrink: 0;
+  margin-right: 12px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-muted);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s var(--ease-out), border-color 0.15s var(--ease-out),
+    background-color 0.15s var(--ease-out);
+}
+
+.contact-copy:hover {
+  color: var(--accent-strong);
+  border-color: rgba(144, 205, 244, 0.5);
+  background: rgba(99, 179, 237, 0.08);
+}
+
+.contact-copy.is-copied {
+  color: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+/* Mobile: el "▶" es un affordance de hover (no aplica en touch) y achicar
+   tipografía/paddings deja que el email entre en una sola línea a 390px. */
+@media (max-width: 560px) {
+  .contact-link {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .contact-icon {
+    font-size: 18px;
+  }
+
+  .contact-value {
+    font-size: 12px;
+  }
+
+  .contact-arrow {
+    display: none;
+  }
+
+  .contact-copy {
+    margin-right: 10px;
+    padding: 5px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-icon,
+  .contact-value,
+  .contact-arrow,
+  .contact-copy {
+    transition: none !important;
+  }
+}
